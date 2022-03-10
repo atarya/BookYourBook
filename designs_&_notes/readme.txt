@@ -1,0 +1,1 @@
+This directory will store UI design's project planning and other notes.
