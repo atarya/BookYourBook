@@ -1,0 +1,6 @@
+/*
+User UUID
+Membership Type
+Membership Active
+Membership expiry
+*/
