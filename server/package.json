@@ -1,13 +1,14 @@
 {
-  "name": "server",
+  "name": "book_your_book",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Book sharing & exchange app.",
+  "main": "server.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
