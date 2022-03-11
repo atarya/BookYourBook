@@ -1,0 +1,6 @@
+/*
+UUID
+Society Name
+Lat Long
+City
+*/

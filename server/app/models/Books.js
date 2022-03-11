@@ -1,0 +1,14 @@
+/*
+Book ID
+Owner
+Title
+Author
+Description
+Genre
+Rating
+ISBN
+Availability
+Current Holder
+Timestamp
+Earliest Availability
+*/
