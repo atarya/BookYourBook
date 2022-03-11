@@ -1,0 +1,34 @@
+CREATE TABLE "Users" (
+  "userID" UUID PK,
+  "Password" String,
+  "Full Name" String,
+  "Address" String,
+  "Gender" String,
+  "Birth Date" Date,
+  "Current Society" String,
+  "Address" String,
+  "Profile Picture" String,
+  "Mobile" integer
+);
+
+CREATE TABLE "Membership" (
+  "Membership Type" String,
+  "Membership Active" Boolean,
+  "Membership expiry" Type,
+  "userID" UUID FK,
+  CONSTRAINT "FK_Membership.userID"
+    FOREIGN KEY ("userID")
+      REFERENCES "Users"("userID")
+);
+
+CREATE TABLE "User's Referral" (
+  "userID" FK,
+  "Address" String,
+  "Invitee of" Array,
+  "Invited by" Type,
+  "OTP Verified" Boolean
+);
+
+
+Here is the link of that resource
+[ER model]( https://lucid.app/lucidchart/89c21b18-4e23-44c7-934c-a4e4aee955f1/edit?invitationId=inv_ca8aebe1-5dbd-48c7-ac06-62560dcf687d&page=0_0# )
