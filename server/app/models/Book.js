@@ -1,45 +1,56 @@
-/*
-Book ID
-Owner
-Title
-Author
-Description
-Genre
-Rating
-ISBN
-Availability
-Current Holder
-Timestamp
-Earliest Availability
-*/
-
 const { sequelize } = require('../../config/psqldb');
 
 const Book = sequelize.define('Book', {
-    // Here we define our model attributes
-    // Each attribute will pair to a column in our database
-
-    // Our primaryKey, book id, our unique identifier
-    id: {
+    book_id: {
         type: DataTypes.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
     },
-
-    // A column for the title of our book
+    owner: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: false
     },
-
-    // A column for the author name 
-    authorName: {
-        type: DataTypes.STRING
-        // remember allowNull defaults to true
+    author: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    genre: {
+        type: DataTypes.ARRAY,
+        allowNull: false
+    },
+    rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    isbn: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    available: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    },
+    holder: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'Owner'
+    },
+    availability: {
+        type: DataTypes.DATEONLY
     }
 }, {
     // For the sake of clarity we specify our indexes
-    indexes: [{ unique: true, fields: ['id'] }]
+    indexes: [{ unique: true, fields: ['book_id'] }],
+    timestamps: true
 });
 
 // `sequelize.define` also returns the model
