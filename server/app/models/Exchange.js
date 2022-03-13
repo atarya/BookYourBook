@@ -1,4 +1,4 @@
-const { sequelize } = require('../../config/psqldb');
+const mongoose = require('mongoose');
 
 const Exchange = sequelize.define('Exchange', {
     exchange_id: {

@@ -1,6 +1,6 @@
-const { sequelize } = require('../../config/psqldb');
+const mongoose = require('mongoose');
 
-const Book = sequelize.define('Book', {
+const Book = new mongoose.Schema('Book', {
     book_id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -47,14 +47,7 @@ const Book = sequelize.define('Book', {
     availability: {
         type: DataTypes.DATEONLY
     }
-}, {
-    // For the sake of clarity we specify our indexes
-    indexes: [{ unique: true, fields: ['book_id'] }],
-    timestamps: true
 });
-
-// `sequelize.define` also returns the model
-console.log(Book === sequelize.models.Book); // true
 
 module.exports = {
     Book,

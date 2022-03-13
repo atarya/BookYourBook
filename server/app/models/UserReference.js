@@ -1,4 +1,4 @@
-
+const mongoose = require('mongoose');
 const refUser = sequelize.define('refUser', {
 
     user_id: {
