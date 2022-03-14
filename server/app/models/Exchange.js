@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// NEED TO CHANGE THE SCHEMA TO MONGOOSE SCHEMA
+
 const Exchange = sequelize.define('Exchange', {
     exchange_id: {
         type: DataTypes.UUID,

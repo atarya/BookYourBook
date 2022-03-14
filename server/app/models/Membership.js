@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// NEED TO CHANGE THE SCHEMA TO MONGOOSE SCHEMA
+
 const Membership = sequelize.define('Membership', {
 
     user_id: {
