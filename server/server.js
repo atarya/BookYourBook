@@ -5,6 +5,10 @@ const express = require('express');
 const cors = require('cors');
 // get MongoDB driver connection
 const dbo = require('./config/mongo');
+// const passport = require('passport');
+// const Stratergy = require('passport-local').Strategy;
+// const session = require('express-session');
+// const flash = require('connect-flash');
 
 const PORT = process.env.PORT || 4321;
 const app = express();
