@@ -22,6 +22,8 @@ app.use(function (err, _req, res) {
     res.status(500).send('Something broke!');
 });
 
+app.use("/user", require('./app/routes/user'))
+
 // perform a database connection when the server starts
 dbo.connectToServer(function (err) {
     if (err) {
