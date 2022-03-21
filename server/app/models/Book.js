@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+
+// NEED TO CHANGE THE SCHEMA TO MONGOOSE SCHEMA
+
 const Book = new mongoose.Schema('Book', {
     book_id: {
         type: DataTypes.UUID,
