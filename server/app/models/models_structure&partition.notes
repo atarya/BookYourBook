@@ -1,0 +1,84 @@
+DB Name:
+    BookYourBook
+
+Collections/Models:
+    users
+    books
+    exchanges
+    societies
+    memberships
+    chats
+    messages
+
+Schemas:
+
+    Users:
+        user_id:            unique > required > ObjectId > random/auto
+        phone:              string > required > unique > "10 digits"
+        password:           string > required > "standard pattern" (need to define)
+        otp_verified:       boolean > required > default false
+        full_name:          string > required > "first name last name"
+        avatar:             string > required > default "URL" > cloudinary uploaded url
+        dob:                date > required > "DD/MM/YYYY" > between 13-100 years old on the day of signup
+        gender:             string > male | female | others
+        current_society:    ObjectId > ref: societies
+        users_invite_code:  string > unique > random/auto > 5 characters
+        reference_code:     string > ref: users
+
+    Books:
+        book_id:            unique > required > ObjectId > random/auto
+        book_title:         string > required > "book name"
+        book_author:        string > required > "author name"
+        cover:              string > required > default "URL" > cloudinary uploaded url
+        owner:              ObjectId > ref: users
+        genre:              array > required > selected from an existing list
+        description:        string > required > "book description"
+        isbn:               string > required > "13 digits"
+        available:          boolean > required > default true
+        reviews:            array of objects > [{    
+                                                    holder: ObjectId > ref users
+                                                    rating: number (1 - 5)
+                                                    review: string with character limit
+                                                ]}
+    
+    Exchanges:
+        exchange_id:        unique > required > ObjectId > random/auto
+        book_id:            ObjectId > ref: books
+        borrower:           ObjectId > ref: users
+        status:             string > requested (default) | accepted | rejected
+        borrow_date:        date > required > "DD/MM/YYYY" > default "some old date", this is changed after status changes to accepted
+        return_date:        date > required > "DD/MM/YYYY" > (for now) borrow_date +10 days
+        returned:           boolean > required > default false
+
+    Societies:
+        society_id:         unique > required > ObjectId > random/auto
+        society_name:       string > required > "society name"
+        society_address:    array > [PIN Code, City, address line detailed]
+        society_cordinates: array > [latitude, longitude]
+
+    Memberships:
+        membership_id:          unique > required > ObjectId > random/auto
+        user_id:                ObjectId > ref: users
+        membership_date:        date > required > "DD/MM/YYYY"
+        expiry:                 date > required > "DD/MM/YYYY" > (for now) membership_date +1 year if transaction_details[0] is successful
+        transaction_details:    array > [
+                                            {
+                                                transaction_id: string > required > unique > random/auto
+                                                amount: number > required > "amount in INR"
+                                                status: string > required > "success" | "failed"
+                                                reference_code: string > required > "generated from stripe"
+                                            }
+                                        ]
+
+    Chats:
+        chatName:       string
+        isGroupChat:    boolean > default: false
+        users:          ObjectId > ref: users
+        latestMessage:  ObjectId > ref: messages
+        groupAdmin:     ObjectId > ref: users
+
+    Messages:
+        sender:         ObjectId > ref: users
+        content:        string
+        chat:           ObjectId > ref: chats
+        readBy:         array of Objects > [{ ObjectId > ref: users }]
