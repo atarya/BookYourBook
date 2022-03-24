@@ -78,7 +78,7 @@ const SignUp = () => {
               <MyTextInput
                 label="Full Name"
                 icon="person"
-                placeholder="Sai Kiran Konka"
+                placeholder="Jon Snow"
                 placeholderTextColor={darkLight}
                 onChangeText={handleChange('fullName')}
                 onBlur={handleBlur('fullName')}
@@ -88,7 +88,18 @@ const SignUp = () => {
               <MyTextInput
                 label="Email Address"
                 icon="mail"
-                placeholder="john@example.com"
+                placeholder="jon@snow.com"
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType="email-address"
+              />
+
+              <MyTextInput
+                label="Gender"
+                icon="mail"
+                placeholder="This should be drop down menu"
                 placeholderTextColor={darkLight}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}

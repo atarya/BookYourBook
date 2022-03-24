@@ -75,42 +75,10 @@ const SignUp = () => {
                 >
                     {({ handleChange, handleBlur, handleSubmit, values }) => (
                         <StyledFormArea>
-                            <MyTextInput
-                                label="Full Name"
-                                icon="person"
-                                placeholder="Sai Kiran Konka"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('fullName')}
-                                onBlur={handleBlur('fullName')}
-                                value={values.fullName}
-                            />
+
 
                             <MyTextInput
-                                label="Email Address"
-                                icon="mail"
-                                placeholder="john@example.com"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                keyboardType="email-address"
-                            />
-
-                            <MyTextInput
-                                label="Date of Birth"
-                                icon="calendar"
-                                placeholder="YYYY - MM - DD"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('dateOfBirth')}
-                                onBlur={handleBlur('dateOfBirth')}
-                                value={dob ? dob.toDateString() : ''}
-                                isDate={true}
-                                editable={false}
-                                showDatePicker={showDatePicker}
-                            />
-
-                            <MyTextInput
-                                label="Password"
+                                label="OTP"
                                 icon="lock"
                                 placeholder="* * * * *"
                                 placeholderTextColor={darkLight}
@@ -123,29 +91,16 @@ const SignUp = () => {
                                 setHidePassword={setHidePassword}
                             />
 
-                            <MyTextInput
-                                label="Confirm Password"
-                                icon="lock"
-                                placeholder="* * * * *"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('confirmPassword')}
-                                onBlur={handleBlur('confirmPassword')}
-                                value={values.confirmPassword}
-                                secureTextEntry={hidePassword}
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword={setHidePassword}
-                            />
 
                             <MsgBox>...</MsgBox>
                             <StyledButton onPress={handleSubmit}>
-                                <ButtonText>SignUp</ButtonText>
+                                <ButtonText>Verify OTP</ButtonText>
                             </StyledButton>
                             <Line />
                             <ExtraView>
-                                <ExtraText>Already have an account?</ExtraText>
+
                                 <TextLink>
-                                    <TextLinkContent>Login</TextLinkContent>
+                                    <TextLinkContent>Resend OTP</TextLinkContent>
                                 </TextLink>
                             </ExtraView>
                         </StyledFormArea>
