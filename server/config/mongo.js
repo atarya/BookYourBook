@@ -1,27 +1,17 @@
 require('dotenv').config({ path: '../../.env' });
-const { MongoClient } = require('mongodb');
 const connectionString = process.env.MONGO_URI;
-const client = new MongoClient(connectionString, {
-    useNewUrlParser: true,
-});
+const mongoose = require("mongoose");
 
-let dbConnection;
-
-module.exports = {
-    connectToServer: function (callback) {
-        client.connect(function (err, db) {
-            if (err || !db) {
-                return callback(err);
-            }
-
-            dbConnection = db.db('BookYourBook');
-            console.log('Successfully connected to MongoDB.');
-
-            return callback();
-        });
-    },
-
-    getDb: function () {
-        return dbConnection;
-    },
-};
+module.exports = () => {
+    const connectionParams = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    };
+    try {
+        mongoose.connect(connectionString, connectionParams);
+        console.log("Connected to database successfully..");
+    } catch (error) {
+        console.log(error);
+        console.log("Could not connect database!");
+    }
+}

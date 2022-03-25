@@ -3,32 +3,37 @@ require('dotenv').config({ path: '../.env' });
 
 const express = require('express');
 const cors = require('cors');
-// get MongoDB driver connection
-const dbo = require('./config/mongo');
-
-const PORT = process.env.PORT || 4321;
+const dbConnection = require('./config/mongo');
+const PORT = process.env.PORT || 8080;
 const app = express();
 
+const chats = require('./data/chats');
+
+dbConnection();
+
+//middleware
 app.use(cors());
 app.use(express.json());
 
-// Global error handling
-app.use(function (err, _req, res) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
+//Test route
+
+app.get('/', (req, res) => {
+    console.log('Server is running');
+    res.send("Server is running");
 });
 
-app.use("/user", require('./app/routes/user'))
+app.get("/api/chats", (req, res) => {
+    res.send(chats)
+})
 
-// perform a database connection when the server starts
-dbo.connectToServer(function (err) {
-    if (err) {
-        console.error(err);
-        process.exit();
-    }
+app.get("/api/chats/:id", (req, res) => {
+    const id = req.params.id;
+    const chat = chats.find(chat => chat._id === id);
+    if (!chat) return res.status(404).send("Chat not found");
+    res.send(chat);
+    console.log(req)
+})
 
-    // start the Express server
-    app.listen(PORT, () => {
-        console.log(`Server is running on port: ${PORT}`);
-    });
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`);
 });
