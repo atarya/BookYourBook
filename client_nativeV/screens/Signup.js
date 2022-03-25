@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import { View, TouchableOpacity } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 // formik
 import { Formik } from 'formik';
@@ -41,6 +42,14 @@ const SignUp = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date(2000, 0, 1));
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+    { label: 'Other', value: 'others' },
+  ]);
+
 
   // actual date of birth to be sent
   const [dob, setDob] = useState();
@@ -96,16 +105,19 @@ const SignUp = () => {
                 keyboardType="email-address"
               />
 
-              <MyTextInput
-                label="Gender"
-                icon="mail"
-                placeholder="This should be drop down menu"
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType="email-address"
+              <Text>Gender</Text>
+              <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                style={styles.input}
               />
+
+
+
 
               <MyTextInput
                 label="Date of Birth"
