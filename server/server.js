@@ -5,18 +5,18 @@ const express = require('express');
 const cors = require('cors');
 const dbConnection = require('./config/mongo');
 const PORT = process.env.PORT || 8080;
+// const FE_PORT = process.env.FE_PORT || 3001;
 const app = express();
 
 const chats = require('./data/chats');
 
 dbConnection();
 
-//middleware
+//middlewares
 app.use(cors());
 app.use(express.json());
 
 //Test route
-
 app.get('/', (req, res) => {
     console.log('Server is running');
     res.send("Server is running");
