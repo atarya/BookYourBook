@@ -1,39 +1,36 @@
 // Loads the configuration from config.env to process.env
 require('dotenv').config({ path: '../.env' });
 
-const express = require('express');
+// Imports---------------------------------------------------------------------
+// - Packages
 const cors = require('cors');
 const dbConnection = require('./config/mongo');
-const PORT = process.env.PORT || 8080;
-// const FE_PORT = process.env.FE_PORT || 3001;
-const app = express();
-
 const chats = require('./data/chats');
+const express = require('express');
+const colors = require('colors');
+// - Variables
+const PORT = process.env.PORT || 8080;
+// - Methods
+const app = express();
+// Imports---------------------------------------------------------------------
 
+// Connections-----------------------------------------------------------------
 dbConnection();
 
-//middlewares
+// Middlewares-----------------------------------------------------------------
 app.use(cors());
 app.use(express.json());
 
+// Routes----------------------------------------------------------------------
 //Test route
 app.get('/', (req, res) => {
     console.log('Server is running');
     res.send("Server is running");
 });
+// Endpoints
+app.use("/user", require("./app/routes/userRoutes"));
 
-app.get("/api/chats", (req, res) => {
-    res.send(chats)
-})
-
-app.get("/api/chats/:id", (req, res) => {
-    const id = req.params.id;
-    const chat = chats.find(chat => chat._id === id);
-    if (!chat) return res.status(404).send("Chat not found");
-    res.send(chat);
-    console.log(req)
-})
-
+// Listener--------------------------------------------------------------------
 app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`);
+    console.log(`Server is running on port: ${PORT}`.yellow.bold);
 });

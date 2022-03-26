@@ -5,13 +5,13 @@ const mongoose = require("mongoose");
 module.exports = () => {
     const connectionParams = {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useUnifiedTopology: true
     };
     try {
         mongoose.connect(connectionString, connectionParams);
-        console.log("Connected to database successfully..");
+        console.log("Connected to database successfully..".cyan.underline);
     } catch (error) {
         console.log(error);
-        console.log("Could not connect database!");
+        console.log("Could not connect database!".red.bold);
     }
 }
