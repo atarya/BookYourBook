@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-// import axios from 'axios'
+import axios from 'axios'
 
 const Chatpage = () => {
     const [data, setData] = useState([]);
     const fetchChats = async () => {
-        const chats = await fetch("http://localhost:3000/api/chats").then(response => response.json())
+        const chats = await axios.get("http://localhost:3000/test").then((response) => { return response.data })
         setData(chats)
         console.log(chats)
     }

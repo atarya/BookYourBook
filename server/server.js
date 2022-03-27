@@ -23,11 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes----------------------------------------------------------------------
-//Test route
-app.get('/', (req, res) => {
-    console.log('Server is running');
-    res.send("Server is running");
-});
+
 // Endpoints
 app.use("/user", require("./app/routes/userRoutes"));
 

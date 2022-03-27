@@ -3,28 +3,26 @@ const User = require('../models/User');
 const generateToken = require('../../config/generateToken');
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, phone, password, dob, avatar, gender } = req.body
+    const { name, phone, password, avatar } = req.body
 
-    if (!name || !phone || !password || !gender || !dob) {
+    if (!name || !phone || !password) {
         res.status(400);
         throw new Error("Please enter all details!");
+    } else {
+        const userExists = await User.findOne({ phone });
     }
-
-    const userExists = await User.findOne({ phone });
 
     if (userExists) {
         res.status(400);
         throw new Error("User already exists!");
+    } else {
+        const user = await User.create({
+            name,
+            phone,
+            password,
+            avatar
+        })
     }
-
-    const user = await User.create({
-        name,
-        phone,
-        password,
-        dob,
-        avatar,
-        gender
-    })
 
     if (user) {
         res.status(200).json({
