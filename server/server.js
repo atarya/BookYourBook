@@ -1,34 +1,37 @@
-// Loads the configuration from config.env to process.env
+// Environment
 require('dotenv').config({ path: '../.env' });
 
-const express = require('express');
+// Imports---------------------------------------------------------------------
+// - Packages
 const cors = require('cors');
-// get MongoDB driver connection
-const dbo = require('./config/mongo');
+const dbConnection = require('./config/mongo');
+const { notFound, errorHandler } = require("./app/middlewares/errorHandler");
+const express = require('express');
+const colors = require('colors');
+// - Variables
+const PORT = process.env.PORT || 8080;
+// Imports---------------------------------------------------------------------
 
-const PORT = process.env.PORT || 4321;
+// - Express app
 const app = express();
 
+// Connections-----------------------------------------------------------------
+dbConnection();
+
+// Middlewares-----------------------------------------------------------------
 app.use(cors());
 app.use(express.json());
 
-// Global error handling
-app.use(function (err, _req, res) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
+// Routes----------------------------------------------------------------------
 
-app.use("/user", require('./app/routes/user'))
+// Endpoints
+app.use("/user", require("./app/routes/userRoutes"));
 
-// perform a database connection when the server starts
-dbo.connectToServer(function (err) {
-    if (err) {
-        console.error(err);
-        process.exit();
-    }
+// Middlewares-----------------------------------------------------------------
+app.use(notFound)
+app.use(errorHandler)
 
-    // start the Express server
-    app.listen(PORT, () => {
-        console.log(`Server is running on port: ${PORT}`);
-    });
+// Listener--------------------------------------------------------------------
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`.yellow.bold);
 });
