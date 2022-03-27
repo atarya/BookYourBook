@@ -1,7 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
 
 .App {
-  min-height: 100vh;
-  display: flex;
-  background-color: #34495e;
+    min-height: 100vh;
+    display: flex;
+    background-color: #34495e;
+}
+
+.homeTemp {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    color: aliceblue;
 }

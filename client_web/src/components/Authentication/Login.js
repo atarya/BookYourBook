@@ -1,18 +1,69 @@
 import React, { useState } from "react";
-import { VStack, Button } from "@chakra-ui/react";
+import { VStack, Button, useToast } from "@chakra-ui/react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
+import { useNavigate } from "react-router-dom";
+const axios = require("axios");
 
 const Login = () => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const handleClick = () => {
         setShow(!show);
     };
 
-    const submitHandler = (e) => {};
+    const toast = useToast();
+    const navigate = useNavigate();
+
+    const submitHandler = async () => {
+        setLoading(true);
+        if (!phone || !password) {
+            toast({
+                title: "Please fill all the fields",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+            return;
+        } else {
+            try {
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                }
+
+                const { data } = await axios.post("http://localhost:3000/user/login", { phone, password }, config);
+
+                toast({
+                    title: "Login Successful",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom",
+                });
+
+                localStorage.setItem("userInfo", JSON.stringify(data));
+                setLoading(false);
+                navigate("/home");
+
+            } catch (error) {
+                toast({
+                    title: "Error!",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom",
+                })
+                setLoading(false);
+            }
+        }
+    };
 
     return (
         <VStack spacing="5px" color="black">
@@ -50,6 +101,7 @@ const Login = () => {
                 onClick={() => {
                     submitHandler();
                 }}
+                isLoading={loading}
             >
                 Login
             </Button>

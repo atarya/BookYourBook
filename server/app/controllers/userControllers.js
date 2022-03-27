@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
 const generateToken = require('../../config/generateToken');
+const bcrypt = require("bcryptjs");
 
 const registerUser = asyncHandler(async (req, res) => {
     const { name, phone, password, avatar } = req.body
@@ -19,7 +20,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = await User.create({
         name,
         phone,
-        password,
+        password: bcrypt.hashSync(req.body.password, 10),
         avatar
     });
 
@@ -42,7 +43,7 @@ const authUser = asyncHandler(async (req, res) => {
 
     const user = await User.findOne({ phone });
 
-    if (user && (await user.matchPassword(password))) {
+    if (user && (await bcrypt.compare(password, user.password))) {
         res.json({
             _id: user._id,
             phone: user.phone,
