@@ -46,7 +46,7 @@ const Signup = () => {
             <FormControl id="date" isRequired>
                 <Box d="flex" flexDirection="row">
                     <FormLabel>DOB</FormLabel>
-                    <DatePicker style={{ width: "50%" }} selected={new Date()} style={{ marginTop: 15 }} onChange={(date: Date) => setStartDate(date)} />
+                    <DatePicker style={{ width: "50%", marginTop: 15 }} selected={new Date()} onChange={(date: Date) => setStartDate(date)} />
                     <Menu w="50%">
                         <MenuButton as={Button} colorScheme='pink'>
 

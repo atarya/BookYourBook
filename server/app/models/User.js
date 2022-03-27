@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const user = mongoose.Schema(
     {
@@ -10,7 +11,7 @@ const user = mongoose.Schema(
         // otp_verified: boolean > required > default false
         otp_verified: { type: Boolean, required: true, default: false },
         // full_name: string > required > "first name last name"
-        full_name: { type: String, required: true },
+        name: { type: String, required: true },
         // avatar: string > required > default "URL" > cloudinary uploaded url
         avatar: { type: String, required: true, default: "https://res.cloudinary.com/nupmry/image/upload/v1647986877/bookyourbook/defaults/default_profile_oksztv.jpg" },
         // dob: date > required > "DD/MM/YYYY" > between 13 - 100 years old on the day of signup
@@ -26,6 +27,20 @@ const user = mongoose.Schema(
     },
     { timestamps: true }
 );
+
+user.methods.matchPassword = async (enteredPassword) => {
+    return await bcrypt.compare(enteredPassword, this.password);
+}
+
+user.pre('save', async (next) => {
+    if (!this.isModified) {
+        next()
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+
+});
 
 const User = mongoose.model("User", user);
 
