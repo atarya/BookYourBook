@@ -1,18 +1,19 @@
-// Loads the configuration from config.env to process.env
+// Environment
 require('dotenv').config({ path: '../.env' });
 
 // Imports---------------------------------------------------------------------
 // - Packages
 const cors = require('cors');
 const dbConnection = require('./config/mongo');
-const chats = require('./data/chats');
+const { notFound, errorHandler } = require("./app/middlewares/errorHandler");
 const express = require('express');
 const colors = require('colors');
 // - Variables
 const PORT = process.env.PORT || 8080;
-// - Methods
-const app = express();
 // Imports---------------------------------------------------------------------
+
+// - Express app
+const app = express();
 
 // Connections-----------------------------------------------------------------
 dbConnection();
@@ -29,6 +30,10 @@ app.get('/', (req, res) => {
 });
 // Endpoints
 app.use("/user", require("./app/routes/userRoutes"));
+
+// Middlewares-----------------------------------------------------------------
+app.use(notFound)
+app.use(errorHandler)
 
 // Listener--------------------------------------------------------------------
 app.listen(PORT, () => {
