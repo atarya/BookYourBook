@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import {
     VStack,
     Button,
-    Box,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuGroup,
+    // Box,
+    // Menu,
+    // MenuButton,
+    // MenuList,
+    // MenuItem,
+    // MenuGroup,
     useToast,
 } from "@chakra-ui/react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
@@ -91,19 +91,8 @@ const Signup = () => {
             return;
         } else {
             try {
-                const config = {
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                }
-
-                const data = await axios.post('http://localhost:3000/user/register', { name, phone, password, avatar }, config)
-                    .then(function (response) {
-                        console.log(response);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                const config = { headers: { "Content-Type": "application/json" } }
+                const { data } = await axios.post('http://localhost:3000/user/register', { name, phone, password, avatar }, config)
 
                 toast({
                     title: "Successfully registered",
@@ -120,12 +109,13 @@ const Signup = () => {
             } catch (error) {
                 toast({
                     title: "Error!",
-                    description: error.response.data.error,
+                    // description: error.response.data.message,
                     status: "error",
                     duration: 5000,
                     isClosable: true,
                     position: "bottom",
                 })
+                console.log("from catch ", error);
                 setLoading(false);
             }
         }

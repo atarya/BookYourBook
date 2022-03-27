@@ -8,21 +8,20 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!name || !phone || !password) {
         res.status(400);
         throw new Error("Please enter all details!");
-    } else {
-        const userExists = await User.findOne({ phone });
     }
+    const userExists = await User.findOne({ phone });
 
     if (userExists) {
         res.status(400);
         throw new Error("User already exists!");
-    } else {
-        const user = await User.create({
-            name,
-            phone,
-            password,
-            avatar
-        })
     }
+
+    const user = await User.create({
+        name,
+        phone,
+        password,
+        avatar
+    });
 
     if (user) {
         res.status(200).json({
