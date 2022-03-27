@@ -3,3 +3,4 @@ client_nativeA/node_modules/
 client_nativeV/node_modules/
 server/node_modules/
 .env
+node_modules

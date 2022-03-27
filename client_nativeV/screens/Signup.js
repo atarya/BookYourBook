@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import { View, TouchableOpacity } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+// import DropDownPicker from 'react-native-dropdown-picker';
 
 // formik
 import { Formik } from 'formik';
@@ -106,7 +106,7 @@ const SignUp = () => {
               />
 
               <Text>Gender</Text>
-              <DropDownPicker
+              {/* <DropDownPicker
                 open={open}
                 value={value}
                 items={items}
@@ -114,7 +114,7 @@ const SignUp = () => {
                 setValue={setValue}
                 setItems={setItems}
                 style={styles.input}
-              />
+              /> */}
 
 
 
