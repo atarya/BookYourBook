@@ -74,9 +74,11 @@ const fetchChats = asyncHandler(async (req, res) => {
     } catch (error) { console.log(error) }
 })
 
-
 const createGroupChat = asyncHandler(async (req, res) => {
-
+    if (!req.body.users || !req.body.name) {
+        res.status(400);
+        throw new Error("Fill all fields!");
+    }
 })
 
 const renameGroup = asyncHandler(async (req, res) => {
