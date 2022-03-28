@@ -12,4 +12,7 @@
     margin-left: auto;
     margin-right: auto;
     color: aliceblue;
+    border: aquamarine;
+    border-radius: 10px;
+    padding: 10px;
 }
