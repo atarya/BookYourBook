@@ -1,13 +1,15 @@
 
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import TabRoutes from './src/Navigation/TabRoutes';
 import Routes from './src/Navigation/Routes';
 
 
 const App = () => {
   return (
     <View style={{ flex: 1 }}>
-      <Routes />
+      <TabRoutes />
+      {/* <Routes /> */}
     </View>
   );
 };
@@ -15,5 +17,3 @@ const App = () => {
 
 export default App;
 
-
-// 1.10.3 version of gesture handler
