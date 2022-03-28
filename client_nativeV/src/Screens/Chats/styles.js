@@ -6,11 +6,8 @@ const styles = StyleSheet.create({
         flex: 1,
         // justifyContent: 'center',
         // alignItems: 'center',
-        // backgroundColor: '#2c3e50',
+        backgroundColor: '#2c3e50',
     },
-    content: {
-        padding: 30
-    }
 });
 
 export default styles;
