@@ -4,12 +4,17 @@ require('dotenv').config({ path: '../.env' });
 // Imports---------------------------------------------------------------------
 // - Packages
 const cors = require('cors');
-const dbConnection = require('./config/mongo');
-const { notFound, errorHandler } = require("./app/middlewares/errorHandler");
 const express = require('express');
 const colors = require('colors');
+// - Middlewares
+const { notFound, errorHandler } = require("./app/middlewares/errorHandler");
+// - Connections
+const dbConnection = require('./config/mongo');
 // - Variables
 const PORT = process.env.PORT || 8080;
+// - Routes
+const userRoutes = require("./app/routes/userRoutes")
+const chatRoutes = require("./app/routes/chatRoutes")
 // Imports---------------------------------------------------------------------
 
 // - Express app
@@ -23,9 +28,9 @@ app.use(cors());
 app.use(express.json());
 
 // Routes----------------------------------------------------------------------
-
 // Endpoints
-app.use("/user", require("./app/routes/userRoutes"));
+app.use("/user", userRoutes);
+app.use("/chat", chatRoutes);
 
 // Middlewares-----------------------------------------------------------------
 app.use(notFound)
