@@ -175,7 +175,7 @@ const Signup = () => {
                     </Menu>
                 </Box>
             </FormControl> */}
-            <FormControl id="avatar" isRequired>
+            <FormControl id="avatar">
                 <FormLabel>Upload Avatar</FormLabel>
                 <Input
                     type="file"
