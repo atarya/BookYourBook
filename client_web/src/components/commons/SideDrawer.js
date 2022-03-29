@@ -5,6 +5,7 @@ import { Box, Text } from "@chakra-ui/layout"
 import { Button } from "@chakra-ui/button"
 import { Avatar } from "@chakra-ui/avatar"
 import { ChatState } from '../../Context/ChatProvider'
+import ProfileModal from "./ProfileModal"
 
 const SideDrawer = () => {
 
@@ -15,6 +16,10 @@ const SideDrawer = () => {
     const [loading, setLoading] = useState(false)
     const [loadingChat, setLoadingChat] = useState()
 
+    const logoutHandler = () => {
+        localStorage.removeItem("userInfo");
+        window.location.reload();
+    }
 
     return (
         <>
@@ -38,9 +43,11 @@ const SideDrawer = () => {
                             <Avatar size="sm" cursor="pointer" name={user.name} src={user.avatar} />
                         </MenuButton>
                         <MenuList>
-                            <MenuItem>Profile</MenuItem>
+                            <ProfileModal user={user}>
+                                <MenuItem>Profile</MenuItem>
+                            </ProfileModal>
                             <MenuDivider />
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={() => { logoutHandler() }} >Logout</MenuItem>
                         </MenuList>
                     </Menu>
                 </div>
