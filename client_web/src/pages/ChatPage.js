@@ -12,14 +12,14 @@ const Chatpage = () => {
             {user && <SideDrawer />}
             <Box
                 d="flex"
-                flexDirection="column"
+                flexDirection="row"
                 justifyContent="space-between"
                 w="100%"
                 h="50vh"
                 p="10px"
             >
-                {user && <ChatBox />}
                 {user && <MyChats />}
+                {user && <ChatBox />}
             </Box>
         </div>
     );

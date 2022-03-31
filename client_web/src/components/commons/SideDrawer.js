@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Box, Text } from "@chakra-ui/layout";
+import { Spinner } from "@chakra-ui/spinner";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Button } from "@chakra-ui/button";
 import { Avatar } from "@chakra-ui/avatar";
@@ -65,6 +66,8 @@ const SideDrawer = () => {
             };
 
             const { data } = await axios.post("http://localhost:3000/chat", { userId }, config);
+
+            if (!chats.find((c) => c._id === data._id)) setChats([...chats, data]);
 
             setSelectedChat(data);
             setLoadingChat(false);
@@ -217,6 +220,7 @@ const SideDrawer = () => {
                                 />
                             ))
                         )}
+                        {loadingChat && <Spinner ml="auto" d="flex" />}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
