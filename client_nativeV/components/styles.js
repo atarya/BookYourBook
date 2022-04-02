@@ -22,7 +22,7 @@ const { primary, secondary, tertiary, darkLight, brand, green, red, book } = Col
 export const StyledContainer = styled.View`
   flex: 1;
   padding: 25px;
-  padding-top: ${StatusBarHeight + 10}px;
+  padding-top: ${StatusBarHeight + 30}px;
   background-color: ${primary};
 `;
 
@@ -40,13 +40,14 @@ export const WelcomeContainer = styled(InnerContainer)`
 
 
 export const PageLogo = styled.Image`
-  width: 250px;
-  height: 200px;
+  width: 300;
+  height: 300;
+  resizeMode: contain;
 `;
 
 export const Avatar = styled.Image`
-width: 100px;
-height : 100px;
+width: 90px;
+height : 90px;
 margin : auto;
 border-radius : 50px;
 border-width: 2px;
@@ -57,12 +58,13 @@ margin-top: 10px;
 
 
 export const WelcomeImage = styled.Image`
-  height : 50%;
-  min-width: 100%;
+  height : 40%;
+  min-width: 10%;
+
 `;
 
 export const PageTitle = styled.Text`
-  font-size: 50px;
+  font-size: 40px;
   text-align: center;
   font-weight: bold;
   color: grey;
@@ -128,7 +130,7 @@ export const StyledButton = styled.TouchableOpacity`
   
 
   ${(props) => props.google == true && `
-    background-color: ${green};
+    background-color: ${'#3e7ee8'};
     flex-direction: row;
     justify-content: center;
   `}
@@ -138,7 +140,7 @@ export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 14px;
   ${(props) => props.google == true && `
-    padding: 25px;
+    padding: 5px;
 `}
 `;
 
@@ -180,6 +182,23 @@ export const TextLinkContent = styled.Text`
     color: ${brand};
 
 `;
+
+export const DatePick = styled.TextInput`
+  background-color: ${secondary};
+  padding: 10px;
+  padding-left: 45px;
+  padding-right: 2px;
+  border-radius: 5px;
+  font-size: 14px;
+  height: 60px;
+  margin-vertical: 3px;
+  margin-bottom: 5px;
+  color: ${tertiary};
+  width: 110%;
+`;
+
+
+
 
 
 // export const Text
