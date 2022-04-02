@@ -25,7 +25,8 @@ import {
   ExtraView,
   ExtraText,
   TextLink,
-  TextLinkContent
+  TextLinkContent,
+  WelcomeImage,
 } from './../components/styles';
 
 // icons
@@ -34,14 +35,17 @@ import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons';
 // colors
 const { brand, darkLight, primary, book } = Colors;
 
-const Login = () => {
+//keyboard avoiding view
+// import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+
+const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   return (
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        {/* <PageLogo resizeMode="cover" source={require('./../assets/img/img1.jpg')} /> */}
+        {/* <WelcomeImage resizeMode="contain" source={require('./../assets/img/img3.jpg')} /> */}
         <PageTitle>Sign In</PageTitle>
         {/* <SubTitle>Account Login</SubTitle> */}
 
@@ -49,6 +53,7 @@ const Login = () => {
           initialValues={{ mobile: '', password: '' }}
           onSubmit={(values) => {
             console.log(values);
+            navigation.navigate("Welcome")
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -83,12 +88,12 @@ const Login = () => {
               </StyledButton>
               <Line />
               <StyledButton google={true} onPress={handleSubmit}>
+                <ButtonText google={true}> Sign In with </ButtonText>
                 <Fontisto name="google" color={primary} size={20} />
-                {/* <ButtonText google={true}> SIGN IN with Google </ButtonText> */}
               </StyledButton>
               <ExtraView>
-                <ExtraText>Don't have an account already?</ExtraText>
-                <TextLink>
+                <ExtraText>Don't have an account already? </ExtraText>
+                <TextLink onPress={() => navigation.navigate("Signup")}>
                   <TextLinkContent>Sign Up</TextLinkContent>
                 </TextLink>
               </ExtraView>
@@ -97,6 +102,7 @@ const Login = () => {
         </Formik>
       </InnerContainer>
     </StyledContainer>
+
   );
 };
 
