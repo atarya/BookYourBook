@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import { Text, Box } from "@chakra-ui/layout";
 import { ArrowBackIcon } from "@chakra-ui/icons";
@@ -11,6 +11,7 @@ import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
+import "./styles.css";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState();
@@ -20,6 +21,41 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [newMessage, setNewMessage] = useState();
 
     const toast = useToast();
+
+    const fetchMessages = async () => {
+        if (!selectedChat) return;
+
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
+
+            setLoading(true);
+            const { data } = await axios.get(
+                `http://localhost:3000/message/${selectedChat._id}`,
+                config
+            );
+
+            console.log(messages);
+            setMessages(data);
+            setLoading(false);
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to load messages.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+        }
+    };
+
+    useEffect(() => {
+        fetchMessages();
+    }, [selectedChat]);
 
     const sendMessage = async (event) => {
         if (event.key === "Enter" && newMessage) {
@@ -99,6 +135,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                 <UpdateGroupChatModal
                                     fetchAgain={fetchAgain}
                                     setFetchAgain={setFetchAgain}
+                                    fetchMessages={fetchMessages}
                                 />
                             </>
                         )}
@@ -123,7 +160,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                 margin="auto"
                             />
                         ) : (
-                            <div>{/* { All Messages } */}</div>
+                            <div className="messages">
+                                {/* { All Messages } */}
+                            </div>
                         )}
 
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>

@@ -21,7 +21,7 @@ import { Input } from "@chakra-ui/input";
 import { Spinner } from "@chakra-ui/spinner";
 import UserListItem from "../UserAvatar/UserListItem";
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { selectedChat, setSelectedChat, user } = ChatState();
 
@@ -124,6 +124,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
                 ? setSelectedChat()
                 : setSelectedChat(data);
             setFetchAgain(!fetchAgain);
+            fetchMessages();
             setLoading(false);
         } catch (error) {
             toast({
