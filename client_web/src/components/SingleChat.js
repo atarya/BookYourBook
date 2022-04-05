@@ -12,6 +12,7 @@ import { Input } from "@chakra-ui/input";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import "./styles.css";
+import ScrollableChat from "./ScrollableChat";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState();
@@ -161,7 +162,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             />
                         ) : (
                             <div className="messages">
-                                {/* { All Messages } */}
+                                <ScrollableChat messages={messages} />
                             </div>
                         )}
 
