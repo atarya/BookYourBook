@@ -14,6 +14,7 @@ const dbConnection = require('./config/mongo');
 const PORT = process.env.PORT || 8080;
 // - Routes
 const userRoutes = require("./app/routes/userRoutes")
+const messageRoutes = require("./app/routes/messageRoutes")
 const chatRoutes = require("./app/routes/chatRoutes")
 // Imports---------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ app.use(express.json());
 // Endpoints
 app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
+app.use("/message", messageRoutes);
 
 // Middlewares-----------------------------------------------------------------
 app.use(notFound)
