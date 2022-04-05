@@ -51,9 +51,21 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
                 },
                 config
             );
-
+            setSelectedChat(data);
+            setFetchAgain(!fetchAgain);
             setRenameLoading(false);
-        } catch (error) {}
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Something went wrong",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+            });
+            setRenameLoading(false);
+            setGroupChatName("");
+        }
     };
 
     const handleSearch = () => {};
