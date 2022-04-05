@@ -5,6 +5,7 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/button";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import ProfileModal from "./commons/ProfileModal";
+import UpdateGroupChatModal from "./commons/UpdateGroupChatModal";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState();
@@ -33,18 +34,36 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                         {!selectedChat.isGroupChat ? (
                             <>
                                 {getSender(user, selectedChat.users)}
-                                <ProfileModal user={getSenderFull(user, selectedChat.users)} />
+                                <ProfileModal
+                                    user={getSenderFull(
+                                        user,
+                                        selectedChat.users
+                                    )}
+                                />
                             </>
                         ) : (
                             <>
                                 {selectedChat.chatName.toUpperCase()}
-                                {/* <UpdateSelectedGroupChat
+                                <UpdateGroupChatModal
                                     fetchAgain={fetchAgain}
                                     setFetchAgain={setFetchAgain}
-                                /> */}
+                                />
                             </>
                         )}
                     </Text>
+                    <Box
+                        d="flex"
+                        flexDir="column"
+                        justifyContent="flex-end"
+                        p={3}
+                        bg="#E8E8E8"
+                        h="100%"
+                        w="100%"
+                        overflowY="hidden"
+                        borderRadius="lg"
+                    >
+                        Messages Go Here
+                    </Box>
                 </>
             ) : (
                 <Box
