@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import { Text, Box } from "@chakra-ui/layout";
 import { ArrowBackIcon } from "@chakra-ui/icons";
@@ -6,9 +6,61 @@ import { IconButton } from "@chakra-ui/button";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import ProfileModal from "./commons/ProfileModal";
 import UpdateGroupChatModal from "./commons/UpdateGroupChatModal";
+import { Spinner } from "@chakra-ui/spinner";
+import { FormControl } from "@chakra-ui/form-control";
+import { Input } from "@chakra-ui/input";
+import axios from "axios";
+import { useToast } from "@chakra-ui/toast";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState();
+
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [newMessage, setNewMessage] = useState();
+
+    const toast = useToast();
+
+    const sendMessage = async (event) => {
+        if (event.key === "Enter" && newMessage) {
+            try {
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                };
+
+                setNewMessage("");
+                const { data } = await axios.post(
+                    "http://localhost:3000/message",
+                    {
+                        content: newMessage,
+                        chatId: selectedChat._id,
+                    },
+                    config
+                );
+
+                console.log(data);
+                setMessages([...messages, data]);
+            } catch (error) {
+                toast({
+                    title: "Error",
+                    description: "Something went wrong",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom-right",
+                });
+            }
+        }
+    };
+
+    const typingHandler = (e) => {
+        setNewMessage(e.target.value);
+
+        // Typing indicator logic
+    };
 
     return (
         <>
@@ -62,7 +114,27 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                         overflowY="hidden"
                         borderRadius="lg"
                     >
-                        Messages Go Here
+                        {loading ? (
+                            <Spinner
+                                size="xl"
+                                w={20}
+                                h={20}
+                                alignSelf="center"
+                                margin="auto"
+                            />
+                        ) : (
+                            <div>{/* { All Messages } */}</div>
+                        )}
+
+                        <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+                            <Input
+                                placeholder="Enter a message..."
+                                variant="filled"
+                                bg="#E0E0E0"
+                                onChange={typingHandler}
+                                value={newMessage}
+                            />
+                        </FormControl>
                     </Box>
                 </>
             ) : (
