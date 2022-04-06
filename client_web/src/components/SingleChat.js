@@ -13,6 +13,10 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:3000/";
+var socket, selectedChatCompare
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState();
@@ -92,6 +96,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             }
         }
     };
+
+    useEffect(() => {
+        socket = io(ENDPOINT);
+    }, [])
 
     const typingHandler = (e) => {
         setNewMessage(e.target.value);

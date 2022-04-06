@@ -39,6 +39,21 @@ app.use(notFound)
 app.use(errorHandler)
 
 // Listener--------------------------------------------------------------------
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`.yellow.bold);
 });
+
+// WebSocket-------------------------------------------------------------------
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: 'http://localhost:3001',
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log("New user connected".green.bold);
+    // socket.on("disconnect", () => {
+    //     console.log("User disconnected".red.bold);
+    // });
+})
