@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Dell\\Downloads\\Native-login-SignUp-main\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-mk\\values-mk.xml",
+            "outputFile": "D:\\Capstone Deeds\\CAPSTONE GIT MAIN\\BookYourBook\\client_nativeV\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-mk\\values-mk.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Dell\\.gradle\\caches\\transforms-3\\f1d8efb4b8d7ab611577761c63516cd8\\transformed\\appcompat-1.2.0\\res\\values-mk\\values-mk.xml",

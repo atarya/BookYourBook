@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Dell\\Downloads\\Native-login-SignUp-main\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-small-v4\\values-small-v4.xml",
+            "outputFile": "D:\\Capstone Deeds\\CAPSTONE GIT MAIN\\BookYourBook\\client_nativeV\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-small-v4\\values-small-v4.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Dell\\.gradle\\caches\\transforms-3\\442232dfc3bd4636261367c7466b9eb8\\transformed\\material-1.1.0\\res\\values-small-v4\\values-small-v4.xml",

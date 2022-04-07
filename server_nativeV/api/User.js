@@ -2,12 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-// mongoDb user model
+// MONGODB user model
 const User = require('./../models/User')
 
 // Password Handler
 const bcrypt = require('bcrypt');
-
 
 
 // signUp
