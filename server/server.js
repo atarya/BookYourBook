@@ -14,6 +14,7 @@ const dbConnection = require('./config/mongo');
 const PORT = process.env.PORT || 8080;
 // - Routes
 const userRoutes = require("./app/routes/userRoutes")
+const messageRoutes = require("./app/routes/messageRoutes")
 const chatRoutes = require("./app/routes/chatRoutes")
 // Imports---------------------------------------------------------------------
 
@@ -31,12 +32,28 @@ app.use(express.json());
 // Endpoints
 app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
+app.use("/message", messageRoutes);
 
 // Middlewares-----------------------------------------------------------------
 app.use(notFound)
 app.use(errorHandler)
 
 // Listener--------------------------------------------------------------------
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`.yellow.bold);
 });
+
+// WebSocket-------------------------------------------------------------------
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: 'http://localhost:3001',
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log("New user connected".green.bold);
+    // socket.on("disconnect", () => {
+    //     console.log("User disconnected".red.bold);
+    // });
+})
