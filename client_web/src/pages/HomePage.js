@@ -1,8 +1,15 @@
 import React from 'react'
-import { Image, Text, Button } from '@chakra-ui/react'
+import { Image, Button } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
+import { Tooltip, Menu, MenuButton, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react"
+import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons"
+import { Box, Text } from "@chakra-ui/layout"
+import { Avatar } from "@chakra-ui/avatar"
+import { ChatState } from '../Context/ChatProvider'
 
 const HomePage = () => {
+
+    const { user } = ChatState();
 
     const navigate = useNavigate();
 
@@ -11,7 +18,7 @@ const HomePage = () => {
     }
 
     return (
-        <div className="homeTemp">
+        <div>
             <div>
                 <Text fontSize='4xl'>Home</Text>
                 <Image
