@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 
 
 // signUp
-router.post('/signup', () => {
+router.post('/signup', (req, res) => {
     let { name, email, password, dateOfBirth } = req.body;
     // remove whitespaces
     name = name.trim();
@@ -29,7 +29,7 @@ router.post('/signup', () => {
             status: 'FAILED',
             message: 'Invalid name provided',
         })
-    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(name)) {
+    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
         res.json({
             status: 'FAILED',
             message: 'Invalid email provided',
@@ -39,7 +39,7 @@ router.post('/signup', () => {
             status: 'FAILED',
             message: 'Invalid date of birth provided',
         })
-    } else if (password.length < 8) {
+    } else if (password.length < 6) {
         res.json({
             status: 'FAILED',
             message: 'password is too short!',
@@ -98,8 +98,6 @@ router.post('/signup', () => {
 
 
 // signIn
-router.post('/signin', () => {
 
-})
 
 module.exports = router;
