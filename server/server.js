@@ -53,7 +53,19 @@ const io = require('socket.io')(server, {
 
 io.on("connection", (socket) => {
     console.log("New user connected".green.bold);
-    // socket.on("disconnect", () => {
-    //     console.log("User disconnected".red.bold);
-    // });
+
+    socket.on("setup", (userData) => {
+        socket.join(userData._id);
+        console.log(userData._id);
+        socket.emit("connected");
+    });
+
+    socket.on("disconnect", () => {
+        console.log("User disconnected".red.bold);
+    });
+
+    socket.on("join chat", (room) => {
+        console.log(`User joined room ${room}`);
+        socket.join(room);
+    })
 })
