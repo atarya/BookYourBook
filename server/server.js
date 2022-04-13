@@ -81,6 +81,11 @@ io.on("connection", (socket) => {
         });
     });
 
+    socket.off("setup", () => {
+        console.log("User Disconnected").red.bold;
+        socket.leave(userData._id)
+    })
+
     socket.on("disconnect", () => {
         console.log("User disconnected".red.bold);
     });
