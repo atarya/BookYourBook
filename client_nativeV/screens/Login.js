@@ -43,6 +43,35 @@ import axios from 'axios';
 
 const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
+  const [message, setMessage] = useState();
+  const [messageType, setMessageType] = useState();
+
+
+  const handlelogin = (credentials) => {
+    const url = 'https://desolate-cliffs-22842.herokuapp.com/';
+
+    axios
+      .post(url, credentials)
+      .then((response) => {
+        const result = response.data;
+        const { message, status, data } = result;
+
+        if (status !== "SUCCESS") {
+          handleMessage(message, status);
+        } else {
+          navigation.navigate('Welcome', { ...data[0] })
+        }
+      })
+      .catch(error => {
+        console.log(error.JSON());
+        handleMessage("An error occurred. Check your network and try again.")
+      })
+  }
+
+  const handleMessage = (message, type) => {
+    setMessage(message);
+    setMessageType(type);
+  }
 
   return (
     <StyledContainer>
@@ -85,7 +114,7 @@ const Login = ({ navigation }) => {
                 hidePassword={hidePassword}
                 setHidePassword={setHidePassword}
               />
-              <MsgBox>...</MsgBox>
+              <MsgBox type={messageType}>{message}</MsgBox>
               <StyledButton onPress={handleSubmit}>
                 <ButtonText>LOGIN</ButtonText>
               </StyledButton>
