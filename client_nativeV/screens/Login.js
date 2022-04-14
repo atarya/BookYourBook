@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 // formik
 import { Formik } from 'formik';
@@ -47,7 +47,8 @@ const Login = ({ navigation }) => {
   const [messageType, setMessageType] = useState();
 
 
-  const handlelogin = (credentials) => {
+  const handleLogin = (credentials, setSubmitting) => {
+    handleMessage(null); // to clear out previous error messages
     const url = 'https://desolate-cliffs-22842.herokuapp.com/';
 
     axios
@@ -61,9 +62,11 @@ const Login = ({ navigation }) => {
         } else {
           navigation.navigate('Welcome', { ...data[0] })
         }
+        setSubmitting(false);
       })
       .catch(error => {
         console.log(error.JSON());
+        setSubmitting(false);
         handleMessage("An error occurred. Check your network and try again.")
       })
   }
@@ -83,12 +86,17 @@ const Login = ({ navigation }) => {
 
         <Formik
           initialValues={{ mobile: '', password: '' }}
-          onSubmit={(values) => {
-            console.log(values);
-            navigation.navigate("Welcome")
+          onSubmit={(values, { setSubmitting }) => {
+            if (values.mobile == '' || values.password == '') {
+              handleMessage('Please fill all the feilds');
+              setSubmitting(false);
+            } else {
+              handleLogin(values, setSubmitting);
+            }
+
           }}
         >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
+          {({ handleChange, handleBlur, handleSubmit, values, isSubmitting }) => (
             <StyledFormArea>
               <MyTextInput
                 label="Mobile Number"
@@ -115,9 +123,14 @@ const Login = ({ navigation }) => {
                 setHidePassword={setHidePassword}
               />
               <MsgBox type={messageType}>{message}</MsgBox>
-              <StyledButton onPress={handleSubmit}>
-                <ButtonText>LOGIN</ButtonText>
-              </StyledButton>
+              {!isSubmitting &&
+                <StyledButton onPress={handleSubmit}>
+                  <ButtonText>LOGIN</ButtonText>
+                </StyledButton>}
+              {isSubmitting &&
+                <StyledButton disabled={true}>
+                  <ActivityIndicator size='large' color={primary} />
+                </StyledButton>}
               <Line />
               <StyledButton google={true} onPress={handleSubmit}>
                 <ButtonText google={true}> Sign In with </ButtonText>
