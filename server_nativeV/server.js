@@ -3,7 +3,7 @@ require('./config/db');
 
 const app = require('express')();
 
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
 
 const UserRouter = require('./api/User');
@@ -14,7 +14,7 @@ app.use(bodyParser());
 
 app.use('/user', UserRouter);
 
-app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`listening on port ${port}`);
 });
 
