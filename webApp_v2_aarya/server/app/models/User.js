@@ -74,17 +74,17 @@ const user = mongoose.Schema(
             ref: "Society"
         },
         // users_invite_code: string > unique > random / auto > exact 5 characters
-        users_invite_code: { // new user's invite code, will be auto generated and saved
-            type: String,
-            required: true,
-            unique: true,
-            trim: true
-        },
+        // users_invite_code: { // new user's invite code, will be auto generated and saved
+        //     type: String,
+        //     required: true,
+        //     unique: true,
+        //     trim: true
+        // },
         // reference_code: string > ref: users
-        reference_code: {
-            type: Strmongoose.Schema.Types.ObjectId,
+        reference_user: {
+            type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            required: [true, "Reference code is required"],
+            required: [true, "Reference user is required"],
         },
     },
     { timestamps: true }
