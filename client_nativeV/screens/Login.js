@@ -57,10 +57,10 @@ const Login = ({ navigation }) => {
         const result = response.data;
         const { message, status, data } = result;
 
-        if (status !== "SUCCESS") {
+        if (status != 'SUCCESS') {
           handleMessage(message, status);
         } else {
-          navigation.navigate('Welcome', { ...data[0] })
+          navigation.navigate('Welcome', { ...data[0] });
         }
         setSubmitting(false);
       })
@@ -71,7 +71,7 @@ const Login = ({ navigation }) => {
       })
   }
 
-  const handleMessage = (message, type) => {
+  const handleMessage = (message, type = 'FAILED') => {
     setMessage(message);
     setMessageType(type);
   }
@@ -80,15 +80,15 @@ const Login = ({ navigation }) => {
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        {/* <WelcomeImage resizeMode="contain" source={require('./../assets/img/img3.jpg')} /> */}
-        <PageTitle>Sign In</PageTitle>
-        {/* <SubTitle>Account Login</SubTitle> */}
+        <WelcomeImage resizeMode="cover" source={require('./../assets/img/img3.jpg')} />
+        <PageTitle>Book Your Book</PageTitle>
+        <SubTitle>Account Login</SubTitle>
 
         <Formik
-          initialValues={{ mobile: '', password: '' }}
+          initialValues={{ email: '', password: '' }}
           onSubmit={(values, { setSubmitting }) => {
-            if (values.mobile == '' || values.password == '') {
-              handleMessage('Please fill all the feilds');
+            if (values.email == '' || values.password == '') {
+              handleMessage('Please fill all the fields');
               setSubmitting(false);
             } else {
               handleLogin(values, setSubmitting);
@@ -99,14 +99,14 @@ const Login = ({ navigation }) => {
           {({ handleChange, handleBlur, handleSubmit, values, isSubmitting }) => (
             <StyledFormArea>
               <MyTextInput
-                label="Mobile Number"
-                icon="device-mobile"
-                placeholder="9876543210"
+                label="Email"
+                icon="mail"
+                placeholder="jon.doe@example.com"
                 placeholderTextColor={darkLight}
-                onChangeText={handleChange('mobile')}
-                onBlur={handleBlur('mobile')}
-                value={values.mobile}
-                keyboardType="phone-pad"
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType="email-address"
               />
 
               <MyTextInput
