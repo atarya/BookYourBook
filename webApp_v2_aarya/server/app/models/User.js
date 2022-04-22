@@ -18,9 +18,11 @@ const user = mongoose.Schema(
             }
         },
         // password: string > required > "standard pattern"(need to define)
+        // TODO: need to define a standard pattern for password
         password: {
             type: String,
             required: [true, "Password is required"],
+            // Regex validation for reference:
             // validate: { // Between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter
             //     validator: function (v) {
             //         return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(v);
@@ -52,10 +54,10 @@ const user = mongoose.Schema(
             default: "https://res.cloudinary.com/nupmry/image/upload/v1647986877/bookyourbook/defaults/default_profile_oksztv.jpg"
         },
         // dob: date > required > "DD/MM/YYYY" > between 13 - 100 years old on the day of signup
+        // TODO: need validations for dob
         dob: {
             type: Date,
             required: [true, "Date of birth is required"],
-            // validation will be done on the client end
         },
         // gender: string > male | female | others
         gender: {
@@ -73,15 +75,8 @@ const user = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Society"
         },
-        // users_invite_code: string > unique > random / auto > exact 5 characters
-        // users_invite_code: { // new user's invite code, will be auto generated and saved
-        //     type: String,
-        //     required: true,
-        //     unique: true,
-        //     trim: true
-        // },
-        // reference_code: string > ref: users
-        reference_user: {
+
+        reference_user: { // in the front end the referer's phone number will be given and the user_id will be fetched and added here
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: [true, "Reference user is required"],
@@ -102,6 +97,13 @@ user.pre('save', async function (next) {
         next(error)
     }
 })
+
+user.methods.isValidPassword = async function (password) {
+    const user = this;
+    const compare = await bcrypt.compare(password, user.password);
+
+    return compare;
+}
 
 const User = mongoose.model("User", user);
 
