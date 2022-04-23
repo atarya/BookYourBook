@@ -1,5 +1,1 @@
-client_web/node_modules/
-client_nativeA/node_modules/
-client_nativeV/node_modules/
-server/node_modules/
-.env
+client_v/node_modules
