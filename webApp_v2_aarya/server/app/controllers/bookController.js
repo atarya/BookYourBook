@@ -61,7 +61,7 @@ const updateSingle = async (req, res) => {
     // only logged in user can edit their own books, but this can't work with the current schema as any user can add reviews so this needs to be done on the client side
     const { available, review } = req.body; // sample review = { holder: "fsare9ucq9034cty82580ym438ntx0438", rating: 5, review: "This is a comment" }
     try {
-        // if (req.body.owner != req.user.id) {
+        // if (req.body.owner != req.user._id) {
         //     res.status(403).json({ message: "You are not authorized to update this book" });
         // } else {
         if (review) {
@@ -89,7 +89,7 @@ const deleteSingle = async (req, res) => {
         if (!book) {
             res.status(404).json({ message: "Book not found" });
         } else {
-            if (book.owner != req.user.id) {
+            if (book.owner != req.user._id) {
                 res.status(403).json({ message: "You are not authorized to delete this book" });
             } else {
                 await Book.findByIdAndDelete(req.params.id);

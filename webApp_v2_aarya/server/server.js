@@ -9,6 +9,7 @@ require("./app/middlewares/auth")
 const dbConnection = require('./config/mongoAtlas');
 const userRoutes = require('./app/routes/userRoutes');
 const bookRoutes = require('./app/routes/bookRoutes');
+const exchangeRoutes = require('./app/routes/exchangeRoutes');
 
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
@@ -20,6 +21,7 @@ dbConnection(MONGO_URI);
 
 app.use('/user', userRoutes);
 app.use('/book', bookRoutes);
+app.use('/exchange', exchangeRoutes);
 
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
