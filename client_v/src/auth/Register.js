@@ -1,8 +1,9 @@
 import { useState } from "react";
 import RegisterForm from "../components/RegisterForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const Register = () => {
+const Register = ({ history }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,8 +18,11 @@ const Register = () => {
                 password,
             });
             console.log("REGISTERED USER =>", res);
+            toast.success("Register Successful ✌️. Please Login.");
+            history.pushState("/home");
         } catch (err) {
             console.log("ERROR:", err);
+            if (err.response.status === 400) toast.error(err.response.data);
         }
     };
 
