@@ -9,34 +9,34 @@ import { useDispatch } from 'react-redux';
 
 const Login = () => {
     const [email, setEmail] = useState("vhald@tuta.io");
-    const [password, setPassword] = useState("qweqwe");
+    const [password, setPassword] = useState("qqqqqq");
     let navigate = useNavigate();
 
     const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('SEND LOGIN DATA', { email, password });
-
+        console.log("SEND LOGIN DATA", { email, password });
         try {
             let res = await login({ email, password });
+
             if (res.data) {
-                console.log('SAVE USER RESPONSE IN REDUX AND LOCAL STORAGE THEN REDIRECT ==>>')
+                console.log(
+                    "SAVE USER RES IN REDUX AND LOCAL STORAGE THEN REDIRECT ===> "
+                );
                 // console.log(res.data);
                 // save user and token to local storage
-                window.localStorage.setItem('auth', JSON.stringify(res.data));
-                // save iser and token to redux
+                window.localStorage.setItem("auth", JSON.stringify(res.data));
+                // save user and token to redux
                 dispatch({
                     type: "LOGGED_IN_USER",
                     payload: res.data,
                 });
-                // navigate('/')
+                navigate('/')
             }
         } catch (err) {
             console.log(err);
-            if (err.response.status === 400) {
-                toast.error(err.response.data);
-            }
+            if (err.response.status === 400) toast.error(err.response.data);
         }
     };
 
