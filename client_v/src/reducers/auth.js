@@ -1,8 +1,13 @@
+let userState;
+
+if (window.localStorage.getItem("auth")) {
+    userState = JSON.parse(localStorage.getItem("auth"));
+} else {
+    userState = null;
+}
 
 
-// user reducer function
-// {type: 'string', payload: {name: 'user'}}
-export const authReducer = (state = { name: 'vaibhav', role: "Seller" }, action) => {
+export const authReducer = (state = userState, action) => {
     switch (action.type) {
         case "LOGGED_IN_USER":
             return { ...state, ...action.payload }
