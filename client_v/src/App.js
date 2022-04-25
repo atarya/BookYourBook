@@ -11,6 +11,7 @@ import Home from "./booking/Home";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Dashboard from "./user/Dashboard";
+import DashboardSeller from "./user/DashboardSeller";
 
 
 
@@ -29,6 +30,7 @@ function App() {
                 {/* <PrivateRoute exact path="/dashboard" element={<Dashboard />} /> */}
                 <Route exact path='/' element={<PrivateRoute />}>
                     <Route exact path='/dashboard' element={<Dashboard />} />
+                    <Route exact path='/dashboard/seller' element={<DashboardSeller />} />
                 </Route>
 
             </Routes>

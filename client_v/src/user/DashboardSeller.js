@@ -3,7 +3,7 @@ import ConnectNav from "../components/ConnectNav";
 
 
 
-const Dashboard = () => {
+const DashboardSeller = () => {
     return (
         <>
             <div className="container-fluid bg-secondary p-5">
@@ -15,11 +15,11 @@ const Dashboard = () => {
             </div>
 
             <div className="container">
-                <p>Show All booking and a button to browse Books</p>
+                <p>Show All books user have posted and a button to add new ones</p>
             </div>
         </>
     )
 };
 
 
-export default Dashboard;
+export default DashboardSeller;
