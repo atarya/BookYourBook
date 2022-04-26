@@ -12,7 +12,7 @@ router.route("/profiles").get(secure, getAllUsers)
 router.route("/register").post(signup, registerUser)
 router.route("/login").post(passportLogin, loginUser)
 router.route("/profile/:id").get(secure, getUser)
-router.route("/update/:id").put(secure, updateUser)
+router.route("/update").put(secure, updateUser)
 router.route("/delete/:id").delete(secure, deleteUser)
 
 module.exports = router;

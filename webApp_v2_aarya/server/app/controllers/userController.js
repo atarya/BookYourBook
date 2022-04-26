@@ -1,11 +1,14 @@
 // Imports User model
 const User = require('../models/User');
+const Membership = require('../models/Membership');
+
 
 // Login is being handled by the passport passport middleware so this function is intentionally left blank for future use
 const loginUser = async (req, res) => {
     // Check req.body, FIXME: password not encrypted till here
     res.json({
         message: 'SignIn successful',
+        user: await User.findById(req.user._id, { password: 0 }),
         token: req.body.token
     });
 }
@@ -13,7 +16,7 @@ const loginUser = async (req, res) => {
 // I could only create new user with phone number and password, and then update the user with all details
 // which is not ideal, but I couldn't figure out how to do it with passport
 const registerUser = async (req, res) => {
-    const { phone, password, otp_verified, name, dob, gender, current_society, reference_user } = req.body
+    const { phone, password, interests, otp_verified, name, dob, gender, current_society, reference_user } = req.body
     try {
         const checkUser = await User.findOne({ phone })
         const checkReferenceUser = await User.findOne({ phone: reference_user })
@@ -28,6 +31,7 @@ const registerUser = async (req, res) => {
                     // TODO: check DOB range on the client side
                     dob: new Date(dob), // Sample of format received in the request: "01/04/1993" FIXME: make it more precise
                     gender,
+                    interests,
                     current_society,
                     reference_user: checkReferenceUser._id
                 })
@@ -63,9 +67,14 @@ const registerUser = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         // user._id provided in params
-        const user = await User.findById(req.params.id)
-        // TODO: filter response to exclude sensitive info like passwords
-        user ? res.json(user) : res.json({ message: "User not found" })
+        if (req.user._id == req.params.id) {
+            const user = await User.findById(req.user._id, { password: 0 })
+            user ? res.json(user) : res.json({ message: "User not found" })
+        } else {
+            // TODO: filter response to exclude sensitive info like passwords DONE
+            const user = await User.findById(req.params.id, { password: 0, otp_verified: 0, interests: 0, dob: 0, gender: 0, current_society: 0, reference_user: 0 })
+            user ? res.json(user) : res.json({ message: "User not found" })
+        }
     } catch (error) {
         console.log(error)
     }
@@ -93,7 +102,7 @@ const updateUser = async (req, res) => {
 
     try {
         // user._id provided in params
-        const user = await User.findByIdAndUpdate(req.params.id, { // TODO: Seek confirmation on the client side
+        const user = await User.findByIdAndUpdate(req.user._id, { // TODO: Seek confirmation on the client side
             phone,
             password,
             avatar,

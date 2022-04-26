@@ -1,11 +1,14 @@
 const Exchange = require('../models/Exchange');
 const Book = require('../models/Book');
+const Membership = require('../models/Membership');
 
 const initialize = async (req, res) => {
     const { book_id } = req.params;
     const book = await Book.findOne({ _id: book_id });
+    const owner_membership = await Membership.find({ user: book.owner });
+    const owner_active = owner_membership.expiry > new Date() ? true : false;
     try {
-        if (book.available) {
+        if (book.available && owner_active) {
             const exchange = new Exchange({
                 book_id: book_id,
                 borrower: req.user._id,

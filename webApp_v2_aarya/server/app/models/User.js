@@ -17,6 +17,11 @@ const user = mongoose.Schema(
                 message: "Please enter a valid number"
             }
         },
+        interests: {
+            type: [String],
+            required: [true, "Please select interests"],
+            minlength: [5, "Please select at least 5 interests"],
+        },
         // password: string > required > "standard pattern"(need to define)
         // TODO: need to define a standard pattern for password
         password: {

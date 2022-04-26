@@ -50,7 +50,7 @@ const getSearch = async (req, res) => {
 
 const getSingle = async (req, res) => {
     try {
-        const book = await Book.findById(req.params.id);
+        const book = await Book.findById(req.params.book_id);
         book ? res.json(book) : res.json({ message: "Book not found" });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -59,41 +59,53 @@ const getSingle = async (req, res) => {
 
 const updateSingle = async (req, res) => {
     // only logged in user can edit their own books, but this can't work with the current schema as any user can add reviews so this needs to be done on the client side
-    const { available, review } = req.body; // sample review = { holder: "fsare9ucq9034cty82580ym438ntx0438", rating: 5, review: "This is a comment" }
-    try {
-        // if (req.body.owner != req.user._id) {
-        //     res.status(403).json({ message: "You are not authorized to update this book" });
-        // } else {
-        if (review) {
-            const book = await Book.findById(req.params.id);
-            book.reviews.push(review);
-            await book.save();
-            res.json(book);
-        }
-        if (available) {
-            const book = await Book.findById(req.params.id);
-            book.available = available;
-            await book.save();
-            res.json(book);
-        }
-        // }
-    } catch (error) {
+    const { review, rating, title, author, cover, genre, langauge, description, isbn } = req.body; // sample review = { holder: "fsare9ucq9034cty82580ym438ntx0438", rating: 5, review: "This is a comment" }
+    const { action, exchange_id } = req.query;
+    const { book_id } = req.params;
 
+    try {
+        const book = await Book.findById(book_id);
+        if (!book) {
+            res.status(404).json({ message: "Book not found" });
+        }
+        if (action == "details" && req.user._id == book.owner) {
+            const book = await Book.findByIdAndUpdate(book_id, {
+                title, author, cover, genre, langauge, description, isbn
+            })
+            res.json(book);
+        } else if (action == "review") {
+            const exchange = await Exchange.findById(exchange_id);
+            if (!exchange) {
+                res.status(404).json({ message: "Exchange not found" });
+            }
+            if (exchange.borrower != req.user._id) {
+                res.status(403).json({ message: "You are not the borrower of this exchange" });
+            }
+            book.exchanges.push({ review, exchange_id, rating, borrower: req.user._id });
+            await book.save();
+            await Exchange.findByIdAndUpdate(exchange_id, { reviewed: true });
+            res.json(book);
+        } else {
+            res.status(404).json({ message: "Invalid Request" });
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 
 // only logged in user can delete their own books
 const deleteSingle = async (req, res) => {
     try {
-        const book = await Book.findById(req.params.id);
+        const book = await Book.findById(req.params.book_id);
         if (!book) {
             res.status(404).json({ message: "Book not found" });
         } else {
             if (book.owner != req.user._id) {
                 res.status(403).json({ message: "You are not authorized to delete this book" });
             } else {
-                await Book.findByIdAndDelete(req.params.id);
-                res.json({ message: "Book deleted" });
+                await Book.findByIdAndDelete(req.params.book_id);
+                res.json({ message: "Book deleted", book });
             }
         }
     } catch (error) {
