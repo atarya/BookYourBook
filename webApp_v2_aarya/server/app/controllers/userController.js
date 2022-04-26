@@ -32,6 +32,18 @@ const registerUser = async (req, res) => {
                     reference_user: checkReferenceUser._id
                 })
                 // TODO: filter response to exclude sensitive info like passwords
+                const membership = await Membership.create({
+                    user: user._id,
+                    expiry_date: new Date(new Date().setDate(new Date().getDate() + 7)),
+                    transaction_details: {
+                        transaction_id: "trial",
+                        amount: "trial",
+                        status: "trial",
+                        reference_code: "trial"
+                    }
+
+                })
+
                 res.json({
                     message: 'Signup successful',
                     request: user

@@ -37,12 +37,12 @@
 // if no user ID provided then get books of the logged in user
 // 2. paginate
 
---Get > user membership
+--Get > user membership DONE
 
 // Check if the user is logged in
 // 1. get membership of the user logged in
 
---Middleware > (exclusive)
+--Middleware > (exclusive) DONE
 
 // 1. takes the logged in user id
 // 2. fetch the membership of the user
@@ -51,20 +51,20 @@
 
 // this needs to be on all exchange and book routes
 
---Post > create a membership_document
+--Post > create a membership_document DONE
 
 // as soon as the user creates an account, a membership document is created in his name with the expiry date set to today + 7 days
 // & teansaction details as trial
 // check triggers/transactions for this
 
---Put > update membership
+--Put > update membership DONE
 
 // Check if the user is logged in
 
 // 1. get the user membership details and check expiry_date <= today + 7 days
 // 2. if (expiry_date <= today) { then update the expiry_date to now + 1 year } else {expiry_date = expiry_date + 1 year}
 
---Logout > ??
+--Logout >
 
     // Check if the user is logged in
 
