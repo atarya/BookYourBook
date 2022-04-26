@@ -1,8 +1,11 @@
 const Membership = require('../models/Membership');
 
-const membership_check = async (req, res, next) => {
-    const membership = await Membership.findOne({ user: req.user._id })
+const exclusive = async (req, res, next) => {
     try {
+        const membership = await Membership.findOne({ user: req.user._id }).catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        })
         if (!membership || membership.expiry_date < Date.now()) {
             return res.status(401).json({
                 message: "Membership Expired"
@@ -17,4 +20,4 @@ const membership_check = async (req, res, next) => {
     }
 }
 
-module.exports = { membership_check };
+module.exports = { exclusive };

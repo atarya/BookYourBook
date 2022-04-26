@@ -1,7 +1,12 @@
 --Get > popular books
 
+// const owner_membership = await Membership.find({ user: book.owner });
+// const owner_active = owner_membership.expiry > new Date() ? true : false;
+
 // Check if the user is logged in
 // Check for active membership
+
+// exclude books if the owner's membership is expired
 
 // 1. sort the books by average rating (descending)
 // 2. sort by books with maximum count of reviews (descending)
@@ -13,6 +18,8 @@
 
 // Check if the user is logged in
 // Check for active membership
+
+// exclude books if the owner's membership is expired
 
 // 1. get books matching the search query in the fields title, author, description, genre
 // 2. filter books with selected availability
@@ -26,12 +33,16 @@
 // Check if the user is logged in
 // Check for active membership
 
+// throw error if the owner's membership is expired
+
 // 1. get book with the given id
 
 --Get > book by user
 
 // Check if the user is logged in
 // Check for active membership
+
+// throw error if the user's membership is expired
 
 // 1. get books of the user id provided in params 
 // if no user ID provided then get books of the logged in user

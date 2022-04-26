@@ -8,11 +8,11 @@ const secure = passport.authenticate('jwt', { session: false })
 const signup = passport.authenticate('signup', { session: false })
 
 // {{URL}}/user/
-router.route("/profiles").get(secure, getAllUsers)
-router.route("/register").post(signup, registerUser)
-router.route("/login").post(passportLogin, loginUser)
-router.route("/profile/:id").get(secure, getUser)
-router.route("/update").put(secure, updateUser)
-router.route("/delete/:id").delete(secure, deleteUser)
+router.route("/profiles").get(secure, getAllUsers) // Done
+router.route("/register").post(signup, registerUser) // Done
+router.route("/login").post(passportLogin, loginUser) // Done
+router.route("/profile/:id").get(secure, getUser) // Done
+router.route("/update").put(secure, updateUser) // Done
+router.route("/delete/").delete(secure, deleteUser) // Done
 
 module.exports = router;
