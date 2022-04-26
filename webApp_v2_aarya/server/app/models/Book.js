@@ -14,6 +14,8 @@ const book = mongoose.Schema({
     genre: { type: [String], required: true },
     // description: string > required > "book description"
     description: { type: String, required: true },
+    // exchage_count: number > required > default 0
+    count: { type: Number, required: true, default: 0 },
     // isbn: string > required > "13 digits"
     isbn: { type: String, required: true },
     // available: boolean > required > default true
