@@ -12,8 +12,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Dashboard from "./user/Dashboard";
 import DashboardSeller from "./user/DashboardSeller";
-
-
+import NewBook from "./books/NewBook";
 
 function App() {
     return (
@@ -31,6 +30,8 @@ function App() {
                 <Route exact path='/' element={<PrivateRoute />}>
                     <Route exact path='/dashboard' element={<Dashboard />} />
                     <Route exact path='/dashboard/seller' element={<DashboardSeller />} />
+                    <Route exact path='/books/new' element={<NewBook />} />
+
                 </Route>
 
             </Routes>

@@ -29,6 +29,9 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function (next) {
     let user = this;
+    // hash password only if user is changing the password or registering for the first time
+    // make sure to use "this" otherwise each time user.save() is executed, password
+    // will get auto updated and you can't login with original password
     if (user.isModified('password')) {
         return bcrypt.hash(user.password, 12, function (err, hash) {
             if (err) {

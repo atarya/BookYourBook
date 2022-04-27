@@ -1,5 +1,6 @@
 import DashboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
+import { Link } from "react-router-dom";
 
 
 
@@ -14,8 +15,16 @@ const Dashboard = () => {
                 <DashboardNav />
             </div>
 
-            <div className="container">
-                <p>Show All booking and a button to browse Books</p>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-md-10">
+                        <h2>Your Books</h2>
+                    </div>
+                    <div className="col-md-2">
+                        <Link className="btn btn-primary" to="/">Browse Books</Link>
+
+                    </div>
+                </div>
             </div>
         </>
     )
