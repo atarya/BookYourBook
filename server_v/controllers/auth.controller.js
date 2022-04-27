@@ -49,6 +49,9 @@ module.exports.login = async (req, res) => {
                     email: user.email,
                     created_at: user.createdAt,
                     updated_at: user.updatedAt,
+                    stripe_account_id: user.stripe_account_id,
+                    stripe_seller: user.stripe_seller,
+                    stripeSessions: user.stripeSessions,
                 }
             });
         });
