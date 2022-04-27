@@ -16,7 +16,7 @@ module.exports.createConnectAccount = async (req, res) => {
     // if user don't have stripe_account_id yet, create now
     if (!user.stripe_account_id) {
         const account = await stripe.accounts.create({
-            type: 'custom'
+            type: 'standard',
         });
 
         console.log("ACCOUNT ===> ", account);
@@ -31,8 +31,11 @@ module.exports.createConnectAccount = async (req, res) => {
         type: 'account_onboarding'
     })
     // autofill any info such as email
-    accountLink = Object.assign({
-        'stripe_user[email]': user.email || undefined,
+    accountLink = Object.assign(accountLink, {
+        'stripe_user[email]': user.email,
     });
-    console.log("ACCOUNT LINK", accountLink);
+    // console.log("ACCOUNT LINK", accountLink);
+    let link = `${accountLink.url}?${queryString.stringify(accountLink)}`;
+    console.log('LOGIN LINK', link);
+    res.send(link);
 };
