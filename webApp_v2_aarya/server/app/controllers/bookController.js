@@ -1,6 +1,7 @@
 const Book = require('../models/Book');
 const Exchange = require('../models/Exchange');
 const Membership = require('../models/Membership');
+const User = require('../models/User');
 
 
 const getPopular = async (req, res) => {
@@ -50,6 +51,7 @@ const getSearch = async (req, res) => {
         .skip(count * (page - 1));
 
     // don't show the books that have owners with expired memberships
+
 
     res.send(books);
 }

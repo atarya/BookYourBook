@@ -200,6 +200,8 @@
             // update the book count of exchanges
             // set the return date as now
 
+where and how can I use indexes, triggers, transactions, relations in this ???
+
 Ask Vaulstein how to handle societies and locations to replicate the swiggy model ??????
 
 
