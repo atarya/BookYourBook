@@ -1,12 +1,7 @@
-// module.exports.createConnectAccount = async (req, res) => {
-//     console.log('REQUEST USR FROM SIGNIN MIDDLEWARE', req.user);
-//     console.log("YOU HIT CREATE CONNECT ACCOUNT ENDPOINT");
-// }
-
 const User = require("../models/user");
 const Stripe = require("stripe");
 const queryString = require("query-string");
-const { response } = require("express");
+
 
 const stripe = Stripe(process.env.STRIPE_SECRET);
 
@@ -42,19 +37,19 @@ module.exports.createConnectAccount = async (req, res) => {
 };
 
 
-
-// const updateDelayDays = async (accountId) => {
-//     const account = await stripe.account.update(accountId, {
-//         settings: {
-//             payouts: {
-//                 schedule: {
-//                     delay_days: 7,
-//                 }
-//             }
-//         }
-//     });
-//     return account;
-// }
+// cant manipulate dates in STANDARDstripe
+const updateDelayDays = async (accountId) => {
+    const account = await stripe.account.update(accountId, {
+        settings: {
+            payouts: {
+                schedule: {
+                    delay_days: 7,
+                }
+            }
+        }
+    });
+    return account;
+}
 
 
 module.exports.getAccountStatus = async (req, res) => {
@@ -89,3 +84,21 @@ module.exports.getAccountBalance = async (req, res) => {
         console.log(err);
     }
 }
+
+// as this for EXPRESS STRIPE account & standards doesn't provide "edit account details" feature
+module.exports.payoutSetting = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).exec();
+
+        const loginLink = await stripe.accounts.createLoginLink(
+            user.stripe_account_id,
+            {
+                redirect_url: process.env.STRIPE_SETTING_REDIRECT_URL,
+            }
+        );
+        // console.log("LOGIN LINK FOR PAYOUT SETTING", loginLink);
+        res.json(loginLink);
+    } catch (err) {
+        console.log("STRIPE PAYOUT SETTING ERR ", err);
+    }
+};

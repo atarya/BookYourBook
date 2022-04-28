@@ -49,7 +49,7 @@ const ConnectNav = () => {
             </Card>
             {auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled && (
                 <>
-                    <Ribbon text="Available" color="grey">
+                    <Ribbon text="Available" color="gold">
                         <Card className="bg-light pt-1">
                             {balance && balance.pending && balance.pending.map((bp, i) => (
                                 <span key={i} className="lead">
@@ -58,7 +58,9 @@ const ConnectNav = () => {
                             ))}
                         </Card>
                     </Ribbon>
-                    <Ribbon text="Payouts" color="silver">
+
+                    {/* ONLY FOR EXPRESS ACCOUNTS */}
+                    <Ribbon text="Edit Account Details" color="silver">
                         <Card onClick={handlePayoutSettings} className="bg-light pointer">
                             <SettingOutlined className="h5 pt-2" />
                         </Card>
