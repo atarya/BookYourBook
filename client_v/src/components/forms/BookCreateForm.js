@@ -1,27 +1,25 @@
 import { Select, DatePicker } from 'antd';
-import AlgoliaPlaces from 'algolia-places-react';
+// import AlgoliaPlaces from 'algolia-places-react';
 import moment from "moment";
 
 // for antd dropdown
 // const { Option } = Select;
 
-const config = {
-    appId: process.env.REACT_APP_ALGOLIA_APP_ID,
-    apiKey: process.env.REACT_APP_ALGOLIA_APP_KEY,
-    language: "en",
-    countries: ["in"],
+// const config = {
+//     appId: process.env.REACT_APP_ALGOLIA_APP_ID,
+//     apiKey: process.env.REACT_APP_ALGOLIA_APP_KEY,
+//     language: "en",
+//     countries: ["in"],
 
-}
+// }
 
 const BookCreateForm = ({ values,
     setValues,
     handleChange,
     handleImageChange,
-    handleSubmit,
-    location,
-    setLocation
+    handleSubmit
 }) => {
-    const { title, content, price, author, genre } = values;
+    const { title, content, price, author, genre, location } = values;
     return (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -53,14 +51,23 @@ const BookCreateForm = ({ values,
                     value={author}
                 />
 
-                <AlgoliaPlaces
+                <input
+                    type="text"
+                    name="location"
+                    onChange={handleChange}
+                    placeholder="Your Location"
+                    className="form-control m-2"
+                    value={location}
+                />
+
+                {/* <AlgoliaPlaces
                     className="form-control m-2"
                     placeholder="Location"
                     defaultValue={location}
                     options={config}
                     onChange={({ suggestion }) =>
                         setLocation(suggestion.value)}
-                />
+                /> */}
 
                 <textarea
                     name="content"

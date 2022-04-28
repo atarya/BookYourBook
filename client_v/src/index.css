@@ -1,3 +1,7 @@
 .pointer {
     cursor: pointer;
 }
+
+.image {
+    height: 40;
+}

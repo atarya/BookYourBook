@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { BookOutlined } from '@ant-design/icons';
 import { createConnectAccount } from "../actions/stripe";
+import { sellerBooks, deleteBook } from "../actions/book"
 import { toast } from 'react-toastify';
-
+import SmallCard from "../components/cards/SmallCard";
 
 
 const DashboardSeller = () => {
     const { auth } = useSelector((state) => ({ ...state }));
+    const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        loadSellersBooks();
+    }, []);
+
+    const loadSellersBooks = async () => {
+        let { data } = await sellerBooks(auth.token);
+        setBooks(data);
+    };
+
 
     const handleClick = async () => {
         setLoading(true);
@@ -26,6 +38,13 @@ const DashboardSeller = () => {
         }
     };
 
+    const handleBookDelete = async (bookId) => {
+        if (!window.confirm("Are you sure?")) return;
+        deleteBook(auth.token, bookId).then((res) => {
+            toast.success("Book Deleted");
+            loadSellersBooks();
+        });
+    };
 
     const connected = () => (
         <div className="container-fluid">
@@ -38,6 +57,21 @@ const DashboardSeller = () => {
 
                 </div>
             </div>
+            <div className="row">
+                {/* <pre>{JSON.stringify(books, null, 4)}</pre> */}
+                <div className="row">
+                    {books.map((b) => (
+                        <SmallCard
+                            key={b._id}
+                            b={b}
+                            showViewMoreButton={false}
+                            owner={true}
+                            handleBookDelete={handleBookDelete}
+                        />
+                    ))}
+                </div>
+            </div>
+
         </div>
     )
 

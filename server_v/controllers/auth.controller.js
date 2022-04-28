@@ -2,21 +2,22 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 module.exports.register = async (req, res) => {
-    console.log(req.body);
-    const { name, email, password } = req.body;
 
-    //validation
-    if (!name) return res.status(400).send('Name is required');
-    if (!password || password.length < 6)
-        return res
-            .status(400)
-            .send("Password is required and must be at least 6 characters long");
-    let userExist = await User.findOne({ email }).exec();
-    if (userExist) return res.status(400).send('Email is taken')
-
-    // register
-    const user = new User(req.body)
     try {
+        console.log(req.body);
+        const { name, email, password } = req.body;
+
+        //validation
+        if (!name) return res.status(400).send('Name is required');
+        if (!password || password.length < 6)
+            return res
+                .status(400)
+                .send("Password is required and must be at least 6 characters long");
+        let userExist = await User.findOne({ email }).exec();
+        if (userExist) return res.status(400).send('Email is taken')
+
+        // register
+        const user = new User(req.body)
         await user.save()
         console.log('USER CREATED', user);
         return res.json({ ok: true });

@@ -22,13 +22,13 @@ const NewBook = () => {
         content: "",
         author: "",   // search add
         image: "",
+        location: "",
         price: "",
         from: "",
         to: "",
         genre: "",        // search debs
     });
 
-    const [location, setLocation] = useState("");
 
     // default image
     const [preview, setPreview] = useState(
@@ -36,7 +36,7 @@ const NewBook = () => {
     );
 
     // destructuring variables from state
-    const { title, content, author, image, price, from, to, genre } = values;
+    const { title, content, author, image, price, from, to, genre, location } = values;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -99,8 +99,7 @@ const NewBook = () => {
                             handleChange={handleChange}
                             handleImageChange={handleImageChange}
                             handleSubmit={handleSubmit}
-                            location={location}
-                            setLocation={setLocation}
+
                         />
                     </div>
                     <div className="col-md-2">
