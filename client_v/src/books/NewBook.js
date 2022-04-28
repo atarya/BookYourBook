@@ -1,31 +1,31 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Select, DatePicker } from 'antd';
-import AlgoliaPlaces from 'algolia-places-react';
-import moment from "moment";
+import { createBook } from "../actions/book";
+import { useSelector } from "react-redux";
+import BookCreateForm from "../components/forms/BookCreateForm";
 
 
-const { Option } = Select;
+// for antd dropdown
+// const { Option } = Select;
 
-const config = {
-    appId: process.env.REACT_APP_ALGOLIA_APP_ID,
-    apiKey: process.env.REACT_APP_ALGOLIA_APP_KEY,
-    language: "en",
-    countries: ["in"],
 
-}
 
 const NewBook = () => {
+    // redux
+    const { auth } = useSelector((state) => ({ ...state }));
+    const { token } = auth;
+
     // state
     const [values, setValues] = useState({
         title: "",
         content: "",
-        author: "",   // c - local
+        author: "",   // search add
         image: "",
         price: "",
         from: "",
         to: "",
-        genre: "",        // c - debs
+        genre: "",        // search debs
     });
 
     const [location, setLocation] = useState("");
@@ -40,9 +40,36 @@ const NewBook = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(values);
-        console.log(location);
-    }
+        // console.log(values);
+        // console.log(location);
+
+        // every browser has FormData support
+        let bookData = new FormData();
+        bookData.append("title", title);
+        bookData.append("content", content);
+        bookData.append("author", author);
+        bookData.append("location", location);
+        bookData.append("price", price);
+        image && bookData.append("image", image);  // make sure we have img in the state
+        bookData.append("from", from);
+        bookData.append("to", to);
+        bookData.append("genre", genre);
+
+        console.log([...bookData]);
+
+        try {
+            let res = await createBook(token, bookData);
+            console.log("BOOK CREATE RES", res);
+            toast.success("New Book is posted");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);   // 1s timeout for save in server
+        } catch (err) {
+            console.log(err);
+            toast.error(err.response.data);
+        }
+    };
+
 
     // handle single image submit
     const handleImageChange = (e) => {
@@ -57,114 +84,6 @@ const NewBook = () => {
 
 
 
-
-    const bookForm = () => (
-        <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label className="btn btn-outline-secondary btn-block m-2 text-left">
-                    Image
-                    <input
-                        type="file"
-                        name="image"
-                        onChange={handleImageChange}
-                        accept="image/*"
-                        hidden
-                    />
-                </label>
-
-                <input
-                    type="text"
-                    name="title"
-                    onChange={handleChange}
-                    placeholder="Title"
-                    className="form-control m-2"
-                    value={title}
-                />
-                <input
-                    type="text"
-                    name="author"
-                    onChange={handleChange}
-                    placeholder="Author Name"
-                    className="form-control m-2"
-                    value={author}
-                />
-
-                <AlgoliaPlaces
-                    className="form-control m-2"
-                    placeholder="Location"
-                    defaultValue={location}
-                    options={config}
-                    onChange={({ suggestion }) =>
-                        setLocation(suggestion.value)}
-                />
-
-                <textarea
-                    name="content"
-                    onChange={handleChange}
-                    placeholder="Content"
-                    className="form-control m-2"
-                    value={content}
-                />
-
-                <input
-                    type="number"
-                    name="price"
-                    onChange={handleChange}
-                    placeholder="Price"
-                    className="form-control m-2"
-                    value={price}
-                />
-
-                <input
-                    type="text"
-                    name="genre"
-                    onChange={handleChange}
-                    placeholder="Select a Genre"
-                    className="form-control m-2"
-                    value={genre}
-                />
-
-                {/* <Select defaultValue="Select a Genre" style={{ width: 220 }} onChange={handleChange} className="form-control m-2">
-                    <Option name="selfHelp" value="selfHelp">Self-Help</Option>
-                    <Option value="thriller">Thriller</Option>
-                    <Option value="fiction" >
-                        Fiction
-                    </Option>
-                    <Option value="horror" disabled>
-                        Horror
-                    </Option>
-                    <Option value="realLife">Real-life</Option>
-                </Select> */}
-
-                <DatePicker
-                    placeholder="From date"
-                    className="form-control m-2"
-                    onChange={(date, dateString) =>
-                        setValues({ ...values, from: dateString })
-                    }
-                    disabledDate={(current) =>
-                        current && current.valueOf() < moment().subtract(1, "days")
-                    }
-                />
-
-                <DatePicker
-                    placeholder="To date"
-                    className="form-control m-2"
-                    onChange={(date, dateString) =>
-                        setValues({ ...values, to: dateString })
-                    }
-                    disabledDate={(current) =>
-                        current && current.valueOf() < moment().subtract(1, "days")
-                    }
-                />
-
-
-            </div>
-
-            <button className="btn btn-outline-primary m-2">Save</button>
-        </form>
-    );
-
     return (
         <>
             <div className="container-fluid bg-secondary p-5 text-center">
@@ -174,7 +93,15 @@ const NewBook = () => {
                 <div className="row">
                     <div className="col-md-10">
                         <br />
-                        {bookForm()}
+                        <BookCreateForm
+                            values={values}
+                            setValues={setValues}
+                            handleChange={handleChange}
+                            handleImageChange={handleImageChange}
+                            handleSubmit={handleSubmit}
+                            location={location}
+                            setLocation={setLocation}
+                        />
                     </div>
                     <div className="col-md-2">
                         <img

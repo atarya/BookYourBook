@@ -29,7 +29,7 @@ const DashboardSeller = () => {
 
     const connected = () => (
         <div className="container-fluid">
-            <div className="row">
+            <div className="row justify-content-between">
                 <div className="col-md-6">
                     <h2>Your Books</h2>
                 </div>

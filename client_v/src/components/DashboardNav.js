@@ -15,7 +15,7 @@ const DashboardNav = () => {
             {/* borrow */}
             <li className="nav-item">
                 <Link className={`nav-link ${active === '/dashboard/seller' && 'active'}`}
-                    to='/dashboard/seller'>BOOKS Available</Link>
+                    to='/dashboard/seller'>Books Available</Link>
             </li>
         </ul>
     );
