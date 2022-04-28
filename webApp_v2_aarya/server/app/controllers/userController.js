@@ -40,12 +40,7 @@ const registerUser = async (req, res) => {
                 await Membership.create({
                     user: user._id,
                     expiry_date: await new Date(new Date().setDate(new Date().getDate() + 7)),
-                    transaction_details: {
-                        transaction_id: user._id,
-                        amount: 0,
-                        status: "trial",
-                        reference_code: "trial"
-                    }
+                    transaction_details: ["Trial"]
                 })
 
                 res.json({

@@ -81,10 +81,10 @@ const user = mongoose.Schema(
             // }
         },
         // current_society: ObjectId > ref: societies
-        current_society: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Society"
-        },
+        // current_society: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: "Society"
+        // },
 
         reference_user: { // in the front end the referer's phone number will be given and the user_id will be fetched and added here
             type: mongoose.Schema.Types.ObjectId,
