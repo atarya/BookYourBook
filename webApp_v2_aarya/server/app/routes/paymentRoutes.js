@@ -7,6 +7,6 @@ const { createOrder, paymentCallback } = require("../controllers/paymentControll
 
 // {{URL}}/payment
 router.route("/createOrder").get(secure, createOrder)
-router.route("/callback").get(secure, paymentCallback)
+router.route("/callback").post(secure, paymentCallback)
 
 module.exports = router;
