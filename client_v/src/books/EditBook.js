@@ -41,13 +41,13 @@ const EditBook = ({ match }) => {
     const { title, content, author, image, price, from, to, genre, location } = values;
 
     useEffect(() => {
-        loadSellerBook();
+        // loadSellerBook();   // disabled because throwing error at backend by line 50
 
     }, []);
 
 
-    const loadSellerBook = async () => {
-        let res = await axios.get(`http://localhost:8000/api/book/:bookId`);
+    const loadSellerBook = async (bookId) => {
+        let res = await axios.get(`http://localhost:8000/api/book/${bookId}`);
         // console.log(res.data);
         setValues({ ...values, ...res.data });
         setPreview(`${process.env.REACT_APP_API}/book/image/${res.data._id}`);

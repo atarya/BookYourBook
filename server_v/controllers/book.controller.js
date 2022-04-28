@@ -71,6 +71,7 @@ module.exports.remove = async (req, res) => {
 
 module.exports.read = async (req, res) => {
     let book = await Book.findById(req.params.bookId)
+        .populate('postedBy', "_id name")
         .select("-image.data")
         .exec();
     console.log("SINGLE BOOK", book);
