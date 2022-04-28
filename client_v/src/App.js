@@ -14,6 +14,7 @@ import Dashboard from "./user/Dashboard";
 import DashboardSeller from "./user/DashboardSeller";
 import NewBook from "./books/NewBook";
 import StripeCallback from "./stripe/StripeCallback";
+import EditBook from "./books/EditBook";
 
 function App() {
     return (
@@ -33,7 +34,7 @@ function App() {
                     <Route exact path='/dashboard/seller' element={<DashboardSeller />} />
                     <Route exact path='/books/new' element={<NewBook />} />
                     <Route exact path='/stripe/callback' element={<StripeCallback />} />
-
+                    <Route exact path="/book/edit/:bookId" element={<EditBook />} />
                 </Route>
 
             </Routes>

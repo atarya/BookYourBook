@@ -36,3 +36,20 @@ export const deleteBook = async (token, bookId) =>
             Authorization: `Bearer ${token}`,
         },
     });
+
+
+export const read = async (bookId) =>
+    await axios.get(`${process.env.REACT_APP_API}/book/${bookId}`);
+
+
+
+export const updateBook = async (token, data, bookId) =>
+    await axios.put(
+        `${process.env.REACT_APP_API}/update-book/${bookId}`,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );

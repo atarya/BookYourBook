@@ -76,3 +76,30 @@ module.exports.read = async (req, res) => {
     console.log("SINGLE BOOK", book);
     res.json(book);
 };
+
+
+module.exports.update = async (req, res) => {
+    try {
+        let fields = req.fields;
+        let files = req.files;
+
+        let data = { ...fields };
+
+        if (files.image) {
+            let image = {};
+            image.data = fs.readFileSync(files.image.path);
+            image.contentType = files.image.type;
+
+            data.image = image;
+        }
+
+        let updated = await Book.findByIdAndUpdate(req.params.bookId, data, {
+            new: true,
+        }).select("-image.data");
+
+        res.json(updated);
+    } catch (err) {
+        console.log(err);
+        res.status(400).send("Book update failed. Try again.");
+    }
+};
