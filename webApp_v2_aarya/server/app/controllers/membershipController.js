@@ -12,12 +12,12 @@ const getMembership = async (req, res) => {
 
 const updateMembership = async (req, res) => {
     const membership = await Membership.findOne({ user: req.user._id });
-    const threshhold = new Date(new Date().setDate(new Date().getDate() + 7))
+    const threshhold = await new Date(new Date().setDate(new Date().getDate() + 7))
     try {
         if (membership.expiry_date < threshhold) {
             membership.expiry_date < new Date() ?
-                membership.expiry_date = new Date(new Date().setDate(new Date().getDate() + 365))
-                : membership.expiry_date = new Date(membership_expiry.setDate(new Date().getDate() + 365))
+                membership.expiry_date = await new Date(new Date().setDate(new Date().getDate() + 365))
+                : membership.expiry_date = await new Date(membership.expiry_date.setDate(new Date().getDate() + 365))
 
             await membership.save();
             res.json(membership);

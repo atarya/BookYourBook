@@ -6,7 +6,7 @@ const { getMembership, updateMembership } = require("../controllers/membershipCo
 const secure = passport.authenticate('jwt', { session: false })
 
 // {{URL}}/membership/
-router.route("/get").get(secure, getMembership)
-router.route("/update").get(secure, updateMembership)
+router.route("/get").get(secure, getMembership) // Done
+router.route("/update").put(secure, updateMembership)
 
 module.exports = router;

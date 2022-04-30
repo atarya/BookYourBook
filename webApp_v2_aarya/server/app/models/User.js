@@ -17,6 +17,11 @@ const user = mongoose.Schema(
                 message: "Please enter a valid number"
             }
         },
+        interests: {
+            type: [String],
+            required: [true, "Please select interests"],
+            minlength: [5, "Please select at least 5 interests"],
+        },
         // password: string > required > "standard pattern"(need to define)
         // TODO: need to define a standard pattern for password
         password: {
@@ -47,6 +52,12 @@ const user = mongoose.Schema(
                 message: "Please enter a valid name"
             }
         },
+        // save location of user, and update it everytime the user logs in
+        location: {
+            type: Object,
+            required: true,
+            default: { type: "Point", coordinates: [0, 0] }
+        },
         // avatar: string > required > default "URL" > cloudinary uploaded url
         avatar: {
             type: String,
@@ -71,10 +82,10 @@ const user = mongoose.Schema(
             // }
         },
         // current_society: ObjectId > ref: societies
-        current_society: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Society"
-        },
+        // current_society: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: "Society"
+        // },
 
         reference_user: { // in the front end the referer's phone number will be given and the user_id will be fetched and added here
             type: mongoose.Schema.Types.ObjectId,
@@ -84,6 +95,8 @@ const user = mongoose.Schema(
     },
     { timestamps: true }
 );
+
+user.index({ "location": "2dsphere" });
 
 user.pre('save', async function (next) {
     try {

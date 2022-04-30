@@ -26,9 +26,10 @@ const book = mongoose.Schema({
     //                                 review: string with character limit
     //                             ]}
     reviews: [{
-        holder: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        borrower: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         rating: { type: Number, required: true },
-        review: { type: String, required: true }
+        review: { type: String, required: true },
+        exchange_id: { type: mongoose.Schema.Types.ObjectId, ref: "Exchange" }
     }],
     langauge: { type: String, required: true, default: "English" },
 },

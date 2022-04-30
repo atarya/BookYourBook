@@ -1,0 +1,15 @@
+user1
+"lat": 13.064646,
+"long": 77.578941
+
+user2 (nearby user1)
+"lat": 13.072115,
+"long": 77.559802
+
+user3 (far from user1 & user2)
+"lat": 12.853143,
+"long": 77.582543
+
+user4 (far from user1 & user2 but near user 3)
+"lat": 12.854814,
+"long": 77.570611

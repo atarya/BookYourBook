@@ -1,7 +1,12 @@
 --Get > popular books
 
+// const owner_membership = await Membership.find({ user: book.owner });
+// const owner_active = owner_membership.expiry > new Date() ? true : false;
+
 // Check if the user is logged in
 // Check for active membership
+
+// exclude books if the owner's membership is expired
 
 // 1. sort the books by average rating (descending)
 // 2. sort by books with maximum count of reviews (descending)
@@ -13,6 +18,8 @@
 
 // Check if the user is logged in
 // Check for active membership
+
+// exclude books if the owner's membership is expired
 
 // 1. get books matching the search query in the fields title, author, description, genre
 // 2. filter books with selected availability
@@ -26,12 +33,16 @@
 // Check if the user is logged in
 // Check for active membership
 
+// throw error if the owner's membership is expired
+
 // 1. get book with the given id
 
 --Get > book by user
 
 // Check if the user is logged in
 // Check for active membership
+
+// throw error if the user's membership is expired
 
 // 1. get books of the user id provided in params 
 // if no user ID provided then get books of the logged in user
@@ -68,21 +79,21 @@
 
     // Check if the user is logged in
 
-    --Get > user
+    --Get > user DONE
 
 // Check if the user is logged in
 
 // 1. get req.user._id
 // 2. get user details
 
---Put > update user
+--Put > update user DONE
 
 // Check if the user is logged in
 
 // 1. get req.user._id
 // 2. check that the logged in user is updating his own details only
 
---Post > create a new book
+--Post > create a new book DONE
 
 // Check if the user is logged in
 // Check for active membership
@@ -92,7 +103,7 @@
 
 // add a field to count the number of exchanges
 
---Post > create a new user
+--Post > create a new user DONE
 
 // check that the user doesn't exist already
 // check the reference user exists
@@ -101,7 +112,7 @@
 // & teansaction details as trial
 // add user's 5 favorite tags while registering
 
---Delete > delete a book
+--Delete > delete a book DONE
 
 // Check if the user is logged in
 // Check for active membership
@@ -110,7 +121,7 @@
 // 2. check that the logged in user is the owner of the book
 // 3. delete the book
 
---put > update a book
+--put > update a book DONE
 
 // Check if the user is logged in
 // Check for active membership
@@ -189,4 +200,9 @@
             // update the book count of exchanges
             // set the return date as now
 
+where and how can I use indexes, triggers, transactions, relations in this ???
+
 Ask Vaulstein how to handle societies and locations to replicate the swiggy model ??????
+
+
+    Chat ???
