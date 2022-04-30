@@ -13,6 +13,11 @@ const getPopular = async (req, res) => {
     // 3. filter out the books belonging to the logged in user | 4. order by maximum count of exchanges in the last 100 days
     // 5. filter out the books with available: false | 6. limit to the first 100 books | 7. paginate
 
+
+
+    // query users by location > get user Ids array >  query docs on the books colllection matching the users >
+
+
 }
 
 const userList = async (req, res) => {
@@ -28,22 +33,43 @@ const userList = async (req, res) => {
 
 // search by title, author, genre, check for 3 req.query; (query = search query, req.user.id = user._id and filter = true/false this would filter only the available books) minus books of logged in user
 const getSearch = async (req, res) => {
-    // req.query will have page, count, available: yes, query, user
+    // req.query will have page, count, available: true, query, user
 
     // don't return the books that have owners with expired membership
+    // var options = {
+    //     location: {
+    //         $geoWithin: {
+    //             $centerSphere: [[parseFloat(req.query.lat), parseFloat(req.query.long)], 3.11 / 3963.2]
+    //         }
+    //     }
+    // }
+
+    const currentUser = await User.findOne({ _id: req.user._id })
+    // console.log(currentUser.location.coordinates)
+    var options = { location: { $near: { $maxDistance: 5000, $geometry: { type: "Point", coordinates: currentUser.location.coordinates } } } }
+    // console.log(options, req.query)
+    const usersNearby = await User.find(options)
+    const userIds = await usersNearby.map(user => user._id)
+    // console.log(usersNearby, userIds)
 
     const { page, count } = req.query // Paginated
     const available = req.query.available == "true" ? false : null;
     const keyword = req.query.query ?
         {
-            $or:
+            $and:
                 [
-                    { title: { $regex: req.query.query, $options: 'i' } },
-                    { author: { $regex: req.query.query, $options: 'i' } },
-                    { genre: { $regex: req.query.query, $options: 'i' } },
-                    { langauge: { $regex: req.query.query, $options: 'i' } },
-                ],
-        } : {};
+                    {
+                        $or:
+                            [
+                                { title: { $regex: req.query.query, $options: 'i' } },
+                                { author: { $regex: req.query.query, $options: 'i' } },
+                                { genre: { $regex: req.query.query, $options: 'i' } },
+                                { langauge: { $regex: req.query.query, $options: 'i' } },
+                            ]
+                    },
+                    { owner: { $in: userIds } }
+                ]
+        } : { owner: { $in: userIds } };
 
     const books = await Book.find(keyword)
         .find({ owner: { $ne: req.user._id }, available: { $ne: available } })
@@ -51,7 +77,6 @@ const getSearch = async (req, res) => {
         .skip(count * (page - 1));
 
     // don't show the books that have owners with expired memberships
-
 
     res.send(books);
 }

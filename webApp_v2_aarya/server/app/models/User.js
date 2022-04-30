@@ -53,10 +53,11 @@ const user = mongoose.Schema(
             }
         },
         // save location of user, and update it everytime the user logs in
-        // loc: {
-        //     type: { type: String },
-        //     coordinates: [],
-        // },
+        location: {
+            type: Object,
+            required: true,
+            default: { type: "Point", coordinates: [0, 0] }
+        },
         // avatar: string > required > default "URL" > cloudinary uploaded url
         avatar: {
             type: String,
@@ -95,7 +96,7 @@ const user = mongoose.Schema(
     { timestamps: true }
 );
 
-user.index({ "loc": "2dsphere" });
+user.index({ "location": "2dsphere" });
 
 user.pre('save', async function (next) {
     try {

@@ -6,6 +6,10 @@ const Membership = require('../models/Membership');
 // Login is being handled by the passport passport middleware so this function is intentionally left blank for future use
 const loginUser = async (req, res) => {
     // Check req.body, FIXME: password not encrypted till here
+    const currentLocation = { type: "Point", coordinates: [req.body.lat, req.body.long] } // FIXME: check lat long order
+    const user = await User.findById(req.user._id)
+    user.location = currentLocation
+    await user.save()
     res.json({
         message: 'SignIn successful',
         user: await User.findById(req.user._id, { password: 0 }),
@@ -20,6 +24,7 @@ const registerUser = async (req, res) => {
     try {
         const checkUser = await User.findOne({ phone })
         const checkReferenceUser = await User.findOne({ phone: reference_user })
+        console.log(typeof (reference_user), reference_user, checkReferenceUser)
 
         if (checkReferenceUser) { // Check if reference user exists
             if (!checkUser) {
@@ -68,7 +73,7 @@ const getUser = async (req, res) => {
             user ? res.json(user) : res.json({ message: "Invalid User" })
         } else {
             // TODO: filter response to exclude sensitive info like passwords DONE
-            const user = await User.findById(req.params.id, { password: 0, otp_verified: 0, interests: 0, dob: 0, gender: 0, current_society: 0, reference_user: 0 })
+            const user = await User.findById(req.params.id, { location: 0, password: 0, otp_verified: 0, interests: 0, dob: 0, gender: 0, reference_user: 0 })
             user ? res.json(user) : res.json({ message: "Invalid User" })
         }
     } catch (error) {
