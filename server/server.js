@@ -1,5 +1,5 @@
 // Environment
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: './.env' });
 
 // Imports---------------------------------------------------------------------
 // - Packages
@@ -16,7 +16,6 @@ const PORT = process.env.PORT || 8080;
 const userRoutes = require("./app/routes/userRoutes")
 const messageRoutes = require("./app/routes/messageRoutes")
 const chatRoutes = require("./app/routes/chatRoutes")
-const bookRoutes = require("./app/routes/bookRoutes")
 // Imports---------------------------------------------------------------------
 
 // - Express app
@@ -34,7 +33,6 @@ app.use(express.json());
 app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
 app.use("/message", messageRoutes);
-app.use("/book", bookRoutes);
 
 // Middlewares-----------------------------------------------------------------
 app.use(notFound)

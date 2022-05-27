@@ -50,7 +50,7 @@ const Login = () => {
 
                 localStorage.setItem("userInfo", JSON.stringify(data));
                 setLoading(false);
-                navigate("/home");
+                navigate("/chat");
 
             } catch (error) {
                 toast({

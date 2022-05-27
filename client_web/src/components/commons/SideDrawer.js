@@ -50,7 +50,7 @@ const SideDrawer = () => {
     const toast = useToast();
 
     const homeRedirect = () => {
-        navigate("/home");
+        navigate("/chat");
     };
 
     const accessChat = async (userId) => {
