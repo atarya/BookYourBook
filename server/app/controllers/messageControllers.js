@@ -6,14 +6,13 @@ const User = require("../models/User");
 const sendMessage = expressAsyncHandler(async (req, res) => {
     const { content, chatId } = req.body;
     if (!content || !chatId) {
-        console.log("Incorrect content or chatId")
         return res.status(400)
     }
 
     var newMessage = {
         sender: req.user._id,
         content: content,
-        chatId: chatId
+        chat: chatId
     }
 
     try {

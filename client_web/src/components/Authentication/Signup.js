@@ -57,11 +57,9 @@ const Signup = () => {
                 .then((res) => res.json())
                 .then((data) => {
                     setAvatar(data.url.toString());
-                    console.log(data);
                     setLoading(false);
                 })
                 .catch((error) => {
-                    console.log(error);
                     setLoading(false);
                 });
         } else {
@@ -115,7 +113,6 @@ const Signup = () => {
                     isClosable: true,
                     position: "bottom",
                 })
-                console.log("from catch ", error);
                 setLoading(false);
             }
         }

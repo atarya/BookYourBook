@@ -67,7 +67,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 config
             );
 
-            console.log(messages);
             setMessages(data);
             setLoading(false);
             socket.emit("join chat", selectedChat._id);
@@ -122,7 +121,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     config
                 );
 
-                console.log(data);
                 socket.emit("new message", data);
                 setMessages([...messages, data]);
             } catch (error) {

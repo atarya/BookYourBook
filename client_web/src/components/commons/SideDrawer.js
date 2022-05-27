@@ -113,7 +113,6 @@ const SideDrawer = () => {
                 setLoading(false);
                 setSearchResult(data);
             } catch (error) {
-                console.log(error);
                 toast({
                     title: "Couldn't get any results",
                     status: "error",

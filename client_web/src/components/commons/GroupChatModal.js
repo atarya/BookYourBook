@@ -49,7 +49,6 @@ const GroupChatModal = ({ children }) => {
                 config
             );
             setLoading(false);
-            console.log(data);
             setSearchResult(data);
         } catch (error) {
             toast({

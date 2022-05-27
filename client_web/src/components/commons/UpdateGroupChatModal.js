@@ -192,11 +192,9 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                     `http://localhost:3000/user?search=${search}`,
                     config
                 );
-                console.log(data);
                 setLoading(false);
                 setSearchResult(data);
             } catch (error) {
-                console.log(error);
                 toast({
                     title: "Couldn't get any results",
                     status: "error",
